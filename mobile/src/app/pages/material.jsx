@@ -1,7 +1,7 @@
 let React = require('react');
 let Router = require('react-router');
 
-let Account = React.createClass({
+let Material = React.createClass({
 	getInitialState() {
 	    return {
 	    
@@ -16,7 +16,7 @@ let Account = React.createClass({
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
 						<li className="appbar-title col-xs-9 row center-xs middle-xs">
-							<h4>Account</h4>
+							<h4>Material</h4>
 						</li>
 						<li className="col-xs-1 end-xs"></li>
 					</ul>
@@ -29,4 +29,4 @@ let Account = React.createClass({
 	}
 });
 
-module.exports = Account ;
+module.exports = Material ;

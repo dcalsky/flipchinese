@@ -86,7 +86,7 @@ let Fast = React.createClass({
 		});
 	},
 	_loadMore(){
-		this.getMaterial(this.page++,this.state.currentTopic,this.state.currentLevel,'',false);
+		this.getMaterial(++this.page,this.state.currentTopic,this.state.currentLevel,'',false);
 	},
 	render(){
 		let self = this;
@@ -94,7 +94,7 @@ let Fast = React.createClass({
 			<div className="fast">
 				<section className="appbar">
 					<ul className="appbar-list row">
-						<li className="appbar-icon col-xs-2 start-xs">
+						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
 						<li className="appbar-title col-xs-9 row center-xs middle-xs" onClick={this._spreadTopic}>
