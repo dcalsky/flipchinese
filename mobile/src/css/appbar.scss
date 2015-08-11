@@ -1,0 +1,25 @@
+.appbar {
+	position: relative;
+	top: 0;
+	padding: 15px;
+	margin: 0;
+	background-color: #1967d2;
+	color: white;
+	.appbar-list {
+		list-style: none;
+		.appbar-icon i {
+			font-size: 30px;
+		}
+		.appbar-title{
+			text-align: center;
+			h4 {
+				font-size: 20px;
+				font-weight: 500;
+			}
+			i {
+				padding-left: 5px;
+				font-size: 20px;
+			}
+		}
+	}
+}

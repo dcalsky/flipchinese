@@ -1,0 +1,84 @@
+.appbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    margin: 0 0 !important;
+    z-index: 9999;
+    background: #1976D2;
+	box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.12), 0 -2px 10px rgba(0, 0, 0, 0.24);
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.appbar .title {
+	font-size: 24px;
+	font-weight: 600;
+	padding-left: 20px;
+    color: rgba(255, 255, 255, 0.87);
+    cursor: pointer;
+}
+.appbar .status {
+	font-size: 18px;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.87);
+}
+.appbar .appbar-login {
+	cursor: pointer;
+}
+.appbar .status p {
+	margin-right: 10px;
+}
+.appbar .status .option {
+	font-size: 30px;
+	width: 30px;
+	color: white;
+	cursor: pointer;
+}
+.appbar .status .option i {
+	padding-right: 5px;
+}
+.appbar .status .option i:active {
+	color: #e5e5e5;
+}
+.appbar .status .dropdown-menu-content .drop-menu {
+	position: absolute;
+	top: 70%;
+	z-index: 9999;
+	left: auto;
+	right: 55px;
+	padding: 15px 0;
+	background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+	cursor: auto;
+}
+.appbar .status .dropdown-menu-content {
+	display: absolute;
+	right: 100px;
+}
+.appbar .status .dropdown-menu-content .drop-menu li {
+	font-size: 16px;
+	color:#000;
+	padding: 5px 20px;
+	cursor: pointer;
+}
+.appbar .status .dropdown-menu-content .drop-menu li:hover {
+	background-color: #eee;
+}
+.appbar li {
+	list-style: none;
+}
+.appbar li a {
+	margin: 0;
+	font-size: 20px;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.87);
+	cursor: pointer;
+	text-decoration: none;
+}
+.appbar 
+

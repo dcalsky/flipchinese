@@ -1,0 +1,52 @@
+.material-list {
+	padding: 5px;
+	margin-bottom: 50px;
+	li {
+		border-bottom: 1px solid #e5e5e5;
+		margin: 3px 0;
+		&>div {
+			padding-left: 0;
+		}
+		.material-img {
+			width: 100%;
+			height: auto;
+			padding: 0;
+			margin: 0;
+		}
+		.material-title {
+			font-size: 18px;
+			font-weight: 500;
+			margin-bottom: 5px;
+			color: black;
+			text-overflow:ellipsis; 
+			white-space:nowrap; 
+			overflow:hidden;
+		}
+		.material-pin {
+			padding-right: 5px;
+			font-size: 14px;
+			color: #8c8c8c;
+		}
+	}
+}
+.topic-list {
+	position: absolute;
+	top: 60px;
+	left: 0;
+	width: 100%;
+	list-style: none;
+	background-color: #fafafa;
+	li {
+		font-size: 20px;
+		font-weight: 400;
+		color: #000;
+		margin: 5px 0;
+		line-height: 1.5;
+		padding-left: 10px;
+		border-bottom: 1px solid #c2c2c2;
+
+	}
+	.active {
+		color: red;
+	}
+}

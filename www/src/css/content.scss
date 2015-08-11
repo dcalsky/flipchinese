@@ -1,0 +1,45 @@
+
+.card {
+	padding: 40px 0px;
+	.content-list {
+		list-style: none;
+		img {
+			width: 100%;
+			max-height: 462px;
+		}
+		li {
+			padding: 0 0 20px 0;
+			margin: 20px;
+			box-shadow: 2px 2px 3px #aaaaaa;
+			border: 1px solid #E5E5E5;
+			.content-title {
+		        font-size: 18px;
+		        padding: 10px;
+		        height: 30px;
+		        color: #0084CA;
+		        text-overflow: ellipsis;
+		        white-space: wrap;
+		        overflow: hidden;
+			}
+			.content-intro {
+		        font-size: 14px;
+		        padding: 0 10px 0 10px;
+		        word-break: break-all;
+		        height: 60px;
+		        overflow: hidden;
+		        border-bottom: 1px solid #E5E5E5;
+			}
+			.content-topic {
+		        font-size: 10px;
+		        padding: 10px;
+		        color: #8c8c8c;
+		        word-break: break-all;
+		        height: 18px;
+		        overflow: hidden;
+			}
+			.content-button {
+				padding-top: 10px;
+			}
+		}
+	}
+}

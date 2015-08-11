@@ -1,0 +1,47 @@
+{
+  "name": "flip-chinese",
+  "version": "0.0.1",
+  "description": "flip-chinese",
+  "scripts": {
+    "start": "gulp"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "react-tap-event-plugin": "~0.1.7",
+    "react": "~0.13.3",
+    "react-router": "~0.13.3",
+    "underscore": "~1.8.3",
+    "whatwg-fetch": "~0.9.0",
+    "cookie-cutter": "~0.1.1",
+    "react-mixin": "~1.6.0",
+    "react-validation-mixin": "~4.2.0",
+    "joi": "~6.5.0",
+    "react-storage": "~0.1.0"
+  },
+  "devDependencies": {
+    "babel": "~5.6.23",
+    "babelify": "~6.1.3",
+    "browser-sync": "~2.8.0",
+    "browserify": "~11.0.0",
+    "gulp": "~3.9.0",
+    "gulp-autoprefixer": "~2.3.1",
+    "gulp-compass": "^2.1.0",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-notify": "~2.2.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-shell": "~0.4.2",
+    "gulp-sourcemaps": "~1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "~3.0.6",
+    "intro.js": "^0.9.0",
+    "jsxhint": "~0.15.1",
+    "pretty-hrtime": "~1.0.0",
+    "react-select": "^0.5.5",
+    "require-dir": "~0.3.0",
+    "vinyl-buffer": "~1.0.0",
+    "vinyl-source-stream": "~1.1.0",
+    "watchify": "~3.3.0",
+    "xhr2": "^0.1.3"
+  }
+}
