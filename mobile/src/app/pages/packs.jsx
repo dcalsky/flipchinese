@@ -7,12 +7,12 @@ let reqwest = require('reqwest');
 let Loader = require('../components/loader.jsx');
 //let checkStatus = require('../utils/check-status.js');
 
-let Fast = React.createClass({
+let Pack = React.createClass({
 	page: 1,
 	mixins: [Router.Navigation],
 	getInitialState() {
 	    return {
-	        materials: [],
+	        packs: [],
 	        topics: [],
 	        currentTopic: '',
 	        currentLevel: '',
@@ -22,13 +22,13 @@ let Fast = React.createClass({
 	    };
 	},
 	componentWillMount() {
-	    this.getMaterial(1,'','','',true);
+	    this.getPacks(1,'','','',true);
 	    this.getTopic();
 	},
 	getTopic(){
 		let self = this;
 	    reqwest({
-	        url: 'http://api.flipchinese.com/api/v1/materials/topics?free=1'
+	        url: 'http://api.flipchinese.com/api/v1/packs/topics'
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
@@ -40,18 +40,19 @@ let Fast = React.createClass({
 	      }
 	    });
 	},
-	getMaterial(page,topic,level,title,initial){
+	getPacks(page,topic,level,title,initial){
 		let self = this;
 		this.setState({loadCompleted: false,})
 	    reqwest({
-	        url: 'http://api.flipchinese.com/api/v1/materials?page='+page+'&topic='+topic+'&level='+level+'&title='+title+'&free=1'
+	        url: 'http://api.flipchinese.com/api/v1/packs?page='+page+'&topic='+topic+'&level='+level+'&title='+title
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
+	      	console.log(resp)
 	      	self.setState({
-	      		materials: initial ? resp.materials : self.state.materials.concat(resp.materials),
+	      		packs: initial ? resp.packs : self.state.packs.concat(resp.packs),
 	      		loadCompleted: true,
-	      		loadButton: resp.materials && resp.materials.length >= 6 ? true : false
+	      		loadButton: resp.packs && resp.packs.length >= 6 ? true : false
 	      	});
 	      }
 	      , error(err){
@@ -69,7 +70,7 @@ let Fast = React.createClass({
 	},
 	_handleTopicChange(val){
 		this.page = 1;
-		this.getMaterial(1,val,'','',true);
+		this.getPacks(1,val,'','',true);
 		this.setState({
 			currentTopic: val,
 			topicSpread: false,
@@ -78,7 +79,7 @@ let Fast = React.createClass({
 	},
 	_handleLevelChange(val){
 		this.page = 1;
-		this.getMaterial(1,'',val,'',true);
+		this.getPacks(1,'',val,'',true);
 		this.setState({
 			currentLevel: val,
 			topicSpread: false,
@@ -86,19 +87,19 @@ let Fast = React.createClass({
 		});
 	},
 	_loadMore(){
-		this.getMaterial(this.page++,this.state.currentTopic,this.state.currentLevel,'',false);
+		this.getPacks(++this.page,this.state.currentTopic,this.state.currentLevel,'',false);
 	},
 	render(){
 		let self = this;
 		return(
-			<div className="fast">
+			<div className="packs">
 				<section className="appbar">
 					<ul className="appbar-list row">
 						<li className="appbar-icon col-xs-2 start-xs">
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
 						<li className="appbar-title col-xs-9 row center-xs middle-xs" onClick={this._spreadTopic}>
-							<h4>Fast</h4>
+							<h4>Focus</h4>
 							<i className="zmdi zmdi-caret-down bottom-xs"></i>
 						</li>
 						<li className="col-xs-1 end-xs"></li>
@@ -121,7 +122,7 @@ let Fast = React.createClass({
 					}
 				<section >
 					<ul className="material-list">
-						{this.state.materials.map((item)=>{
+						{this.state.packs.map((item)=>{
 							return(
 								<li className="row middle-xs">
 									<div className="col-xs-6">
@@ -156,4 +157,4 @@ let Fast = React.createClass({
 	}
 });
 
-module.exports = Fast ;
+module.exports = Pack ;

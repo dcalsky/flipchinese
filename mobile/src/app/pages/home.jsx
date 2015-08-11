@@ -7,7 +7,7 @@ let Home = React.createClass({
     render() {
         return (
             <div>
-            	Hello Mobile!
+            	Hello Mobile! Flip Chinese Mobile...
             </div>
         );
     }
