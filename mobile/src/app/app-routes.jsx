@@ -10,6 +10,7 @@ let Fast = require('./pages/fast.jsx');
 let Packs = require('./pages/packs.jsx');
 let Account = require('./pages/account.jsx');
 let Login = require('./pages/login.jsx');
+let Sign = require('./pages/sign.jsx');
 let Material = require('./pages/material.jsx');
 let PackInside = require('./pages/pack-inside.jsx');
 
@@ -22,6 +23,7 @@ let AppRoutes = (
 	    <Route name="focus" handler={Packs} />
 	    <Route name="account" handler={Account} />
 	    <Route name="login" handler={Login} />
+	    <Route name="sign" handler={Sign} />
 	    <Route name="material/:id" handler={Material} />
 	    <Route name="pack-inside/:id" handler={PackInside} />	    	    
 	    <DefaultRoute  handler={Home}/>

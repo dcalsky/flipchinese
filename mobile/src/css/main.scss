@@ -2,8 +2,11 @@
 @import 'footer';
 @import 'loader';
 @import 'button';
+@import 'input';
+@import 'tabs';
 
 @import 'fast';
+@import 'material';
 
 * {
 	margin: 0;
@@ -14,6 +17,10 @@
 	margin: 0;
 	padding: 0;
 	width: 100%;
+}
+
+.main {
+  padding-bottom: 30px;
 }
 
 html {

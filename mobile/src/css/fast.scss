@@ -1,6 +1,6 @@
 .material-list {
 	padding: 5px;
-	margin-bottom: 50px;
+	padding-bottom: 30px;
 	li {
 		border-bottom: 1px solid #e5e5e5;
 		margin: 3px 0;
@@ -34,18 +34,42 @@
 	top: 60px;
 	left: 0;
 	width: 100%;
-	list-style: none;
 	background-color: #fafafa;
-	li {
-		font-size: 20px;
-		font-weight: 400;
-		color: #000;
+	z-index: 999;
+	.topic-item {
+		list-style: disc;
+		font-size: 16px;
+		font-weight: 350;
+		color: #3f3f3f;
 		margin: 5px 0;
 		line-height: 1.5;
-		padding-left: 10px;
-		border-bottom: 1px solid #c2c2c2;
-
+		padding: 10px;
+		border: none;
 	}
+	.topic-kind {
+		list-style: none;
+		font-size: 18px;
+		font-weight: 400;
+		color: #3f3f3f;
+		margin: 5px 0;
+		line-height: 1.5;
+		padding: 10px;
+		border: none;
+	}
+	.topic-line-item {
+	    border: none; 
+	    height: 1px; 
+	    background-image: -webkit-linear-gradient(left, #ffffff, #dcdcdc 70%, #ffffff);
+	    background-image: linear-gradient(to right, #ffffff, #dcdcdc 70%, #ffffff);
+	    background-repeat: no-repeat;
+    }
+	.topic-line-kind {
+	    border: none; 
+	    height: 1px; 
+	    background-image: -webkit-linear-gradient(left, #ffd6d6, #ff3b77 80%, #ffd6d6);
+	    background-image: linear-gradient(left, #ffd6d6, #ff3b77 80%, #ffd6d6);
+	    background-repeat: no-repeat;
+    }
 	.active {
 		color: red;
 	}

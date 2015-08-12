@@ -92,7 +92,7 @@ let Pack = React.createClass({
 	render(){
 		let self = this;
 		return(
-			<div className="packs">
+			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row">
 						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
@@ -109,6 +109,13 @@ let Pack = React.createClass({
 						this.state.topicSpread?
 						<section className="material-list">
 							<ul className="topic-list">
+								<li className={this.state.currentLevel == '' ? 'active' : ''} onClick={()=>{self._handleLevelChange('')}}>All Levels</li>
+								<li className={this.state.currentLevel == 1 ? 'active' : ''} onClick={()=>{self._handleLevelChange(1)}}>Zero Beginner</li>
+								<li className={this.state.currentLevel == 2 ? 'active' : ''} onClick={()=>{self._handleLevelChange(2)}}>Beginner</li>
+								<li className={this.state.currentLevel == 3 ? 'active' : ''} onClick={()=>{self._handleLevelChange(3)}}>Intermediate</li>
+								<li className={this.state.currentLevel == 4 ? 'active' : ''} onClick={()=>{self._handleLevelChange(4)}}>Advanced</li>
+								<li className={this.state.currentLevel == 5 ? 'active' : ''} onClick={()=>{self._handleLevelChange(5)}}>All Levels Applied</li>
+								<br />
 								<li className={this.state.currentTopic == '' ? 'active' : ''} onClick={()=>{self._handleTopicChange('')}}>All Topics</li>
 								{this.state.topics.map((item)=>{
 									return(

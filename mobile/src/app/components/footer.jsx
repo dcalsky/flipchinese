@@ -15,20 +15,16 @@ let Footer = React.createClass({
 		return(
 			<section className="footer">
 				<ul className="footer-list row">
-					<li className={this.isActive('home') ? "col-xs-3 center-xs active" : "col-xs-3 center-xs"} onClick={()=>{this._turnTo('home')}}>
-						<i className="zmdi zmdi-home"></i>
-						<h4>home</h4>
-					</li>
-					<li className={this.isActive('fast') ? "col-xs-3 center-xs active" : "col-xs-3 center-xs"} onClick={()=>{this._turnTo('fast')}}>
+					<li className={this.isActive('fast') ? "col-xs-4 center-xs active" : "col-xs-4 center-xs"} onClick={()=>{this._turnTo('fast')}}>
 						<i className="zmdi zmdi-codepen"></i>
 						<h4>fast</h4>
 					</li>
-					<li className={this.isActive('focus') ? "col-xs-3 center-xs active" : "col-xs-3 center-xs"} onClick={()=>{this._turnTo('focus')}}>
-						<i className="zmdi zmdi-codepen"></i>
+					<li className={this.isActive('focus') ? "col-xs-4 center-xs active" : "col-xs-4 center-xs"} onClick={()=>{this._turnTo('focus')}}>
+						<i className="zmdi zmdi-case"></i>
 						<h4>focus</h4>
 					</li>
-					<li className={this.isActive('account') ? "col-xs-3 center-xs active" : "col-xs-3 center-xs"} onClick={()=>{this._turnTo('account')}}>
-						<i className="zmdi zmdi-account"></i>
+					<li className={this.isActive('account') ? "col-xs-4 center-xs active" : "col-xs-4 center-xs"} onClick={()=>{this._turnTo('account')}}>
+						<i className="zmdi zmdi-account-circle"></i>
 						<h4>account</h4>
 					</li>
 				</ul>

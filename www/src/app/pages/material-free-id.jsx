@@ -128,15 +128,6 @@ let Material = React.createClass({
         });
         this.getMaterial();
     },
-    /*
-    componentDidUpdate(prevProps, prevState) {
-          if(prevProps.params.id != this.getParams().id){
-            console.log("123")
-            window.location.href = '#/material-free/' + this.getParams().id;
-            this.transitionTo('/material-free/' + this.getParams().id)
-          }
-    },
-    */
     getMaterial(){
         let self = this;
         fetcher.get(self.getParams().id, function (data) {
@@ -258,7 +249,7 @@ let Material = React.createClass({
 
                         <div style={styles.footer}>
                             {
-                                this.state.kp.grammar && this.state.kp.voc && this.state.kp.character?
+                                this.state.kp.grammar || this.state.kp.voc || this.state.kp.character?
                                 <div>
                                     <Tabs>
                                         <Tab label="Grammar" >

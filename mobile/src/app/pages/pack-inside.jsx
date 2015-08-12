@@ -2,6 +2,7 @@ let React = require('react');
 let Router = require('react-router');
 
 let PackInside = React.createClass({
+	mixins: [Router.Navigation],
 	getInitialState() {
 	    return {
 	    
@@ -9,7 +10,7 @@ let PackInside = React.createClass({
 	},
 	render(){
 		return(
-			<div className="account">
+			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row">
 						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>

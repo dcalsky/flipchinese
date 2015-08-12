@@ -85,13 +85,16 @@ let Fast = React.createClass({
 			materials: [],
 		});
 	},
+	_enterMaterial(id){
+		this.transitionTo('/material/' + id);
+	},
 	_loadMore(){
 		this.getMaterial(++this.page,this.state.currentTopic,this.state.currentLevel,'',false);
 	},
 	render(){
 		let self = this;
 		return(
-			<div className="fast">
+			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row">
 						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
@@ -108,10 +111,39 @@ let Fast = React.createClass({
 						this.state.topicSpread?
 						<section className="material-list">
 							<ul className="topic-list">
-								<li className={this.state.currentTopic == '' ? 'active' : ''} onClick={()=>{self._handleTopicChange('')}}>All Topics</li>
+								<li onClick={()=>{self._handleLevelChange('')}}>
+									<div className={this.state.currentLevel == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
+										All Levels
+									</div>
+									<hr className="topic-line-kind" />
+								</li>
+								<li onClick={()=>{self._handleLevelChange(11)}}>
+									<div className={this.state.currentLevel == 11 ? 'active topic-item' : 'topic-item'}>
+										Just Arrived
+									</div>
+									<hr className="topic-line-item" />
+								</li>
+								<li onClick={()=>{self._handleLevelChange(12)}}>
+									<div className={this.state.currentLevel == 12 ? 'active topic-item' : 'topic-item'}>
+										Stayed Months or Years
+									</div>
+									<hr className="topic-line-item" />
+								</li>
+								<br />
+								<li onClick={()=>{self._handleTopicChange('')}}>
+									<div className={this.state.currentTopic == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
+										All Topics
+									</div>
+									<hr className="topic-line-kind" />
+								</li>
 								{this.state.topics.map((item)=>{
 									return(
-										<li className={this.state.currentTopic == item ? 'active' : ''} onClick={()=>{self._handleTopicChange(item)}}>{item}</li>
+										<li onClick={()=>{self._handleTopicChange(item)}}>
+											<div className={this.state.currentTopic == item ? 'active topic-item' : 'topic-item'}>
+												{item}
+											</div>
+											<hr className="topic-line-item" />
+										</li>
 									)
 								})}
 							</ul>
@@ -123,7 +155,7 @@ let Fast = React.createClass({
 					<ul className="material-list">
 						{this.state.materials.map((item)=>{
 							return(
-								<li className="row middle-xs">
+								<li className="row middle-xs" onClick={()=>{this._enterMaterial(item.id)}}>
 									<div className="col-xs-6">
 										<img src={item.thumb} className="material-img" />
 									</div>
@@ -136,7 +168,7 @@ let Fast = React.createClass({
 						})}
 						{
 							this.state.loadCompleted && this.state.loadButton ?
-							<li className="middle-xs center-xs" style={{borderBottom: 'none'}}>
+							<li className="middle-xs center-xs" style={{marginTop: 10, borderBottom: 'none'}}>
 								<button className="button-raised" style={{width: '80%'}} onClick={this._loadMore}>Load More</button>
 							</li>
 							:
