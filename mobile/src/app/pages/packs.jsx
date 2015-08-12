@@ -109,17 +109,57 @@ let Pack = React.createClass({
 						this.state.topicSpread?
 						<section className="material-list">
 							<ul className="topic-list">
-								<li className={this.state.currentLevel == '' ? 'active' : ''} onClick={()=>{self._handleLevelChange('')}}>All Levels</li>
-								<li className={this.state.currentLevel == 1 ? 'active' : ''} onClick={()=>{self._handleLevelChange(1)}}>Zero Beginner</li>
-								<li className={this.state.currentLevel == 2 ? 'active' : ''} onClick={()=>{self._handleLevelChange(2)}}>Beginner</li>
-								<li className={this.state.currentLevel == 3 ? 'active' : ''} onClick={()=>{self._handleLevelChange(3)}}>Intermediate</li>
-								<li className={this.state.currentLevel == 4 ? 'active' : ''} onClick={()=>{self._handleLevelChange(4)}}>Advanced</li>
-								<li className={this.state.currentLevel == 5 ? 'active' : ''} onClick={()=>{self._handleLevelChange(5)}}>All Levels Applied</li>
+								<li onClick={()=>{self._handleLevelChange('')}}>
+									<div className={this.state.currentLevel == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
+										All Levels
+									</div>
+									<hr className="topic-line-kind" />
+								</li>
+								<li onClick={()=>{self._handleLevelChange(1)}}>
+									<div className={this.state.currentLevel == 1 ? 'active topic-item' : 'topic-item'}>
+										Zero Beginner
+									</div>
+									<hr className="topic-line-item" />
+								</li>
+								<li onClick={()=>{self._handleLevelChange(2)}}>
+									<div className={this.state.currentLevel == 2 ? 'active topic-item' : 'topic-item'}>
+										Beginner
+									</div>
+									<hr className="topic-line-item" />
+								</li>
+								<li onClick={()=>{self._handleLevelChange(3)}}>
+									<div className={this.state.currentLevel == 3 ? 'active topic-item' : 'topic-item'}>
+										Intermediate
+									</div>
+									<hr className="topic-line-item" />
+								</li>
+								<li onClick={()=>{self._handleLevelChange(4)}}>
+									<div className={this.state.currentLevel == 4 ? 'active topic-item' : 'topic-item'}>
+										Advanced
+									</div>
+									<hr className="topic-line-item" />
+								</li>
+								<li onClick={()=>{self._handleLevelChange(5)}}>
+									<div className={this.state.currentLevel == 5 ? 'active topic-item' : 'topic-item'}>
+										All Levels Applied
+									</div>
+									<hr className="topic-line-item" />
+								</li>
 								<br />
-								<li className={this.state.currentTopic == '' ? 'active' : ''} onClick={()=>{self._handleTopicChange('')}}>All Topics</li>
+								<li onClick={()=>{self._handleTopicChange('')}}>
+									<div className={this.state.currentTopic == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
+										All Topics
+									</div>
+									<hr className="topic-line-kind" />
+								</li>
 								{this.state.topics.map((item)=>{
 									return(
-										<li className={this.state.currentTopic == item ? 'active' : ''} onClick={()=>{self._handleTopicChange(item)}}>{item}</li>
+										<li onClick={()=>{self._handleTopicChange(item)}}>
+											<div className={this.state.currentTopic == item ? 'active topic-item' : 'topic-item'}>
+												{item}
+											</div>
+											<hr className="topic-line-item" />
+										</li>
 									)
 								})}
 							</ul>
