@@ -74,6 +74,7 @@ class Master extends React.Component {
                         <p>E-mail: AskUs@flipchinese.com</p>
                         <p>2015 Flip Chinese. Contact  Jobs  FAQ  Privacy  Terms</p>
                         <p>Shanghai Qifei Education Technology Co. Ltd.</p>
+                        <a href="http://www.miibeian.gov.cn" target="_blank" style={{color: '#e5e5e5', fontSize: 13, textDecoration: 'none'}}>沪ICP备 15004120号-1</a>
                     </footer>
 
             </div >

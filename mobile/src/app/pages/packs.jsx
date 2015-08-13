@@ -4,6 +4,7 @@ let Router = require('react-router');
 let cookie = require('cookie-cutter');
 let reqwest = require('reqwest');
 
+let Error = require('../components/error.jsx');
 let Loader = require('../components/loader.jsx');
 //let checkStatus = require('../utils/check-status.js');
 
@@ -18,7 +19,8 @@ let Pack = React.createClass({
 	        currentLevel: '',
 	        topicSpread: false,
 	        loadCompleted: false,
-	        loadButton: true
+	        loadButton: true,
+	        findNothing: false,
 	    };
 	},
 	componentWillMount() {
@@ -32,7 +34,6 @@ let Pack = React.createClass({
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
-	      	console.log(resp)
 	      	self.setState({topics: resp});
 	      }
 	      , error(err){
@@ -48,12 +49,21 @@ let Pack = React.createClass({
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
-	      	console.log(resp)
-	      	self.setState({
-	      		packs: initial ? resp.packs : self.state.packs.concat(resp.packs),
-	      		loadCompleted: true,
-	      		loadButton: resp.packs && resp.packs.length >= 6 ? true : false
-	      	});
+	      		if(resp.packs &&　resp.packs.length != 0){
+			      	self.setState({
+			      		packs: initial ? resp.packs : self.state.packs.concat(resp.packs),
+			      		loadCompleted: true,
+			      		loadButton: resp.packs && resp.packs.length >= 6 ? true : false,
+			      		findNothing: false,
+			      	});
+	      		}else{
+			      	self.setState({
+			      		packs: initial ? [] : resp.packs,
+			      		loadCompleted: true,
+			      		loadButton: false,
+			      		findNothing: true,
+			      	});
+	      		}
 	      }
 	      , error(err){
       		console.log(err);
@@ -74,7 +84,7 @@ let Pack = React.createClass({
 		this.setState({
 			currentTopic: val,
 			topicSpread: false,
-			materials: [],
+			packs: [],
 		});
 	},
 	_handleLevelChange(val){
@@ -83,7 +93,7 @@ let Pack = React.createClass({
 		this.setState({
 			currentLevel: val,
 			topicSpread: false,
-			materials: [],
+			packs: [],
 		});
 	},
 	_loadMore(){
@@ -197,6 +207,12 @@ let Pack = React.createClass({
 					null
 					:
 					<Loader />
+				}
+				{
+					this.state.findNothing?
+					<Error content="Find Nothing..." handleBack={()=>{this.getPacks(1,'','','',true)}} />
+					:
+					null
 				}
 
 			</div>

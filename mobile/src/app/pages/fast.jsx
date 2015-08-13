@@ -4,6 +4,7 @@ let Router = require('react-router');
 let cookie = require('cookie-cutter');
 let reqwest = require('reqwest');
 
+let Error = require('../components/error.jsx');
 let Loader = require('../components/loader.jsx');
 //let checkStatus = require('../utils/check-status.js');
 
@@ -18,7 +19,8 @@ let Fast = React.createClass({
 	        currentLevel: '',
 	        topicSpread: false,
 	        loadCompleted: false,
-	        loadButton: true
+	        loadButton: true,
+	        findNothing: false,
 	    };
 	},
 	componentWillMount() {
@@ -48,17 +50,27 @@ let Fast = React.createClass({
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
-	      	self.setState({
-	      		materials: initial ? resp.materials : self.state.materials.concat(resp.materials),
-	      		loadCompleted: true,
-	      		loadButton: resp.materials && resp.materials.length >= 6 ? true : false
-	      	});
+	      		if(resp.materials &&　resp.materials.length != 0){
+			      	self.setState({
+			      		materials: initial ? resp.materials : self.state.materials.concat(resp.materials),
+			      		loadCompleted: true,
+			      		loadButton: resp.materials && resp.materials.length >= 6 ? true : false,
+			      		findNothing: false,
+			      	});
+			      }else{
+			      	self.setState({
+			      		materials: initial ? [] : self.state.materials,
+			      		findNothing: true,
+			      		loadButton: false,
+			      		loadCompleted: true,
+			      	});
+			      }
 	      }
 	      , error(err){
-      		console.log(err);
-      		this.setState({
-      			loadCompleted: true,
-      		});
+	      		console.log(err);
+	      		this.setState({
+	      			loadCompleted: true,
+	      		});
 	      }
 	    });
 	},
@@ -181,6 +193,12 @@ let Fast = React.createClass({
 					null
 					:
 					<Loader />
+				}
+				{
+					this.state.findNothing?
+					<Error content="Find Nothing..." handleBack={()=>{this.getMaterial(1,'','','',true);}}/>
+					:
+					null
 				}
 
 			</div>

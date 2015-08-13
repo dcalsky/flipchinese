@@ -182,7 +182,7 @@ let Material = React.createClass({
         mixpanel.track("back", {
             'where': "material-id",
         });
-        this.transitionTo('fast')
+        this.goBack();
     },
     render() {
         if(this.state.findNothing){
