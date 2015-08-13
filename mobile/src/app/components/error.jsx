@@ -5,7 +5,7 @@ let Error = React.createClass({
 		return(
 			<section className="error middle-xs center-xs">
 				<h3 className="error-content">{this.props.content}</h3>
-				<button className="button-flat" onClick={this.props.handleBack}> Back </button>
+				<button className="button-flat" onClick={this.props.handleBack}> {this.props.buttonLabel ? this.props.buttonLabel : 'Back'} </button>
 			</section>
 		);
 	}

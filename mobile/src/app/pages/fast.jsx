@@ -1,3 +1,5 @@
+'use strict';
+
 let React = require('react');
 let Router = require('react-router');
 
@@ -34,7 +36,6 @@ let Fast = React.createClass({
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
-	      	console.log(resp)
 	      	self.setState({topics: resp});
 	      }
 	      , error(err){
@@ -60,7 +61,7 @@ let Fast = React.createClass({
 			      }else{
 			      	self.setState({
 			      		materials: initial ? [] : self.state.materials,
-			      		findNothing: true,
+			      		findNothing: initial,
 			      		loadButton: false,
 			      		loadCompleted: true,
 			      	});
@@ -98,7 +99,7 @@ let Fast = React.createClass({
 		});
 	},
 	_enterMaterial(id){
-		this.transitionTo('/material/' + id);
+		this.transitionTo('/material/' + id ,{},{free: 1});
 	},
 	_loadMore(){
 		this.getMaterial(++this.page,this.state.currentTopic,this.state.currentLevel,'',false);
@@ -108,15 +109,23 @@ let Fast = React.createClass({
 		return(
 			<div className="main">
 				<section className="appbar">
-					<ul className="appbar-list row">
+					<ul className="appbar-list row middle-xs">
 						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs middle-xs" onClick={this._spreadTopic}>
+						<li className="appbar-title col-xs-9 row center-xs" onClick={this._spreadTopic}>
 							<h4>Fast</h4>
 							<i className="zmdi zmdi-caret-down bottom-xs"></i>
 						</li>
-						<li className="col-xs-1 end-xs"></li>
+						<li className="col-xs-1 end-xs" onClick={()=>{
+							if(cookie.get('user_id') && cookie.get('auth_token')){
+								this.transitionTo('account');
+							}else{
+								this.transitionTo('login');
+							}
+						}}>
+							<i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>
+						</li>
 					</ul>
 				</section>
 					{
@@ -173,7 +182,12 @@ let Fast = React.createClass({
 									</div>
 									<div className="col-xs-6">
 										<h4 className="material-title">{item.title}</h4>
-										<p><i className="material-pin zmdi zmdi-pin"></i>{item.topic}</p>
+										{
+											item.topic?
+											<p><i className="material-pin zmdi zmdi-pin"></i>{item.topic}</p>
+											:
+											null
+										}
 									</div>
 								</li>
 							);

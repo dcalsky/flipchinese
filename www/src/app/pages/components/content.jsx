@@ -44,19 +44,29 @@ let Content = React.createClass({
       <li className="col-xs-12 col-md-3 col-sm-5" style={{margin: '20px 10px',listStyle: 'none'}}>
         <div style={styles.img}>
           <img  src={image} />
-          <img src={'./images/tag_' + this.props.item.media + '.png'} style={styles.tag} />
+          {
+            this.props.item.media?
+            <img src={'./images/tag_' + this.props.item.media + '.png'} style={styles.tag} />
+            :
+            null
+          }
         </div>
         <div  className="content-title start-xs">
           <h3>
             {this.props.item.title}
           </h3>
         </div>
-        <div className="content-topic start-xs">
-          <i className="zmdi zmdi-pin" style={{paddingRight: 5, fontSize: 14}}></i>
-          <span>
-            {this.props.item.topic}
-          </span>
-        </div>
+        {
+          this.props.item.topic?
+          <div className="content-topic start-xs">
+            <i className="zmdi zmdi-pin" style={{paddingRight: 5, fontSize: 14}}></i>
+            <span>
+              {this.props.item.topic}
+            </span>
+          </div>
+          :
+          null
+        }
         <div className="content-intro start-xs">
           <p>
             {this.props.item.intro}

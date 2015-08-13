@@ -102,7 +102,7 @@ let Task = React.createClass({
         });
         var self = this;
         fetcher.getTaskResults(cookie.get('user_id'), cookie.get('auth_token'), function (data) {
-            let task = _.findWhere(data.task_results, {id: parseInt(self.getParams().id)});
+            let task = !(data.task_ids.indexOf(parseInt(self.getParams().id)) === -1)
             if (task) {
                 if (task.fulfilled == true) {
                     self.setState({

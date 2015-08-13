@@ -3,7 +3,8 @@ let Router = require('react-router');
 let Tabs = require('../components/tabs.jsx');
 let Loader = require('../components/loader.jsx');
 
-let reqwest =require('reqwest');
+let reqwest = require('reqwest');
+let cookie = require('cookie-cutter');
 let _ = require('underscore');
 
 let Material = React.createClass({
@@ -39,7 +40,7 @@ let Material = React.createClass({
 	getMaterial(){
         let self = this;
 	    reqwest({
-	        url: 'http://api.flipchinese.com/api/v1/materials/' + this.getParams().id
+	        url: self.getQuery().free == 1 ? 'http://api.flipchinese.com/api/v1/materials/' + this.getParams().id : 'http://api.flipchinese.com/api/v1/materials/' + this.getParams().id + '?user_id=' + cookie.get('user_id') + '&auth_token=' + cookie.get('auth_token')
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
@@ -68,7 +69,10 @@ let Material = React.createClass({
             });
 	      }
 	      , error(err){
-      		console.log(err);
+      		self.setState({
+                loadCompleted: true,
+                findNothing: true,
+            });
 	      }
 	    });
 	},
@@ -109,14 +113,22 @@ let Material = React.createClass({
 			return(
 				<div className="main">
 					<section className="appbar">
-						<ul className="appbar-list row">
+						<ul className="appbar-list row middle-xs">
 							<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
 								<i className="zmdi zmdi-chevron-left"></i>
 							</li>
-							<li className="appbar-title col-xs-9 row center-xs middle-xs">
+							<li className="appbar-title col-xs-9 row center-xs">
 								<h4>Material</h4>
 							</li>
-							<li className="col-xs-1 end-xs"></li>
+                            <li className="col-xs-1 end-xs" onClick={()=>{
+                                if(cookie.get('user_id') && cookie.get('auth_token')){
+                                    this.transitionTo('account');
+                                }else{
+                                    this.transitionTo('login');
+                                }
+                            }}>
+                                <i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>
+                            </li>
 						</ul>
 					</section>
 					<section>

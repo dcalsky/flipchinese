@@ -71,11 +71,11 @@ let Login = React.createClass({
 		return(
 			<div className="main">
 				<section className="appbar">
-					<ul className="appbar-list row">
+					<ul className="appbar-list row middle-xs">
 						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs middle-xs">
+						<li className="appbar-title col-xs-9 row center-xs">
 							<h4>Register</h4>
 						</li>
 					</ul>

@@ -61,7 +61,7 @@ let Pack = React.createClass({
 			      		packs: initial ? [] : resp.packs,
 			      		loadCompleted: true,
 			      		loadButton: false,
-			      		findNothing: true,
+			      		findNothing: initial,
 			      	});
 	      		}
 	      }
@@ -99,20 +99,31 @@ let Pack = React.createClass({
 	_loadMore(){
 		this.getPacks(++this.page,this.state.currentTopic,this.state.currentLevel,'',false);
 	},
+	_enterPack(id){
+		this.transitionTo('/pack-inside/' + id);
+	},
 	render(){
 		let self = this;
 		return(
 			<div className="main">
 				<section className="appbar">
-					<ul className="appbar-list row">
+					<ul className="appbar-list row middle-xs">
 						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs middle-xs" onClick={this._spreadTopic}>
+						<li className="appbar-title col-xs-9 row center-xs" onClick={this._spreadTopic}>
 							<h4>Focus</h4>
 							<i className="zmdi zmdi-caret-down bottom-xs"></i>
 						</li>
-						<li className="col-xs-1 end-xs"></li>
+						<li className="col-xs-1 end-xs" onClick={()=>{
+							if(cookie.get('user_id') && cookie.get('auth_token')){
+								this.transitionTo('account');
+							}else{
+								this.transitionTo('login');
+							}
+						}}>
+							<i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>
+						</li>
 					</ul>
 				</section>
 					{
@@ -181,13 +192,18 @@ let Pack = React.createClass({
 					<ul className="material-list">
 						{this.state.packs.map((item)=>{
 							return(
-								<li className="row middle-xs">
+								<li className="row middle-xs" onClick={()=>{this._enterPack(item.id)}}>
 									<div className="col-xs-6">
 										<img src={item.thumb} className="material-img" />
 									</div>
 									<div className="col-xs-6">
 										<h4 className="material-title">{item.title}</h4>
-										<p><i className="material-pin zmdi zmdi-pin"></i>{item.topic}</p>
+										{
+											item.topic?
+											<p><i className="material-pin zmdi zmdi-pin"></i>{item.topic}</p>
+											:
+											null
+										}
 									</div>
 								</li>
 							);
