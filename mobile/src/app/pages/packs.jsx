@@ -108,14 +108,14 @@ let Pack = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs" onClick={this._spreadTopic}>
+						<li className="appbar-title col-xs-9 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
 							<h4>Focus</h4>
-							<i className="zmdi zmdi-caret-down bottom-xs"></i>
+							<i className="zmdi zmdi-caret-down"></i>
 						</li>
-						<li className="col-xs-1 end-xs" onClick={()=>{
+						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
 								this.transitionTo('account');
 							}else{
@@ -130,44 +130,44 @@ let Pack = React.createClass({
 						this.state.topicSpread?
 						<section className="material-list">
 							<ul className="topic-list">
-								<li onClick={()=>{self._handleLevelChange('')}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange('')}}>
 									<div className={this.state.currentLevel == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
 										All Levels
 									</div>
 									<hr className="topic-line-kind" />
 								</li>
-								<li onClick={()=>{self._handleLevelChange(1)}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange(1)}}>
 									<div className={this.state.currentLevel == 1 ? 'active topic-item' : 'topic-item'}>
 										Zero Beginner
 									</div>
 									<hr className="topic-line-item" />
 								</li>
-								<li onClick={()=>{self._handleLevelChange(2)}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange(2)}}>
 									<div className={this.state.currentLevel == 2 ? 'active topic-item' : 'topic-item'}>
 										Beginner
 									</div>
 									<hr className="topic-line-item" />
 								</li>
-								<li onClick={()=>{self._handleLevelChange(3)}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange(3)}}>
 									<div className={this.state.currentLevel == 3 ? 'active topic-item' : 'topic-item'}>
 										Intermediate
 									</div>
 									<hr className="topic-line-item" />
 								</li>
-								<li onClick={()=>{self._handleLevelChange(4)}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange(4)}}>
 									<div className={this.state.currentLevel == 4 ? 'active topic-item' : 'topic-item'}>
 										Advanced
 									</div>
 									<hr className="topic-line-item" />
 								</li>
-								<li onClick={()=>{self._handleLevelChange(5)}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange(5)}}>
 									<div className={this.state.currentLevel == 5 ? 'active topic-item' : 'topic-item'}>
 										All Levels Applied
 									</div>
 									<hr className="topic-line-item" />
 								</li>
 								<br />
-								<li onClick={()=>{self._handleTopicChange('')}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleTopicChange('')}}>
 									<div className={this.state.currentTopic == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
 										All Topics
 									</div>
@@ -175,7 +175,7 @@ let Pack = React.createClass({
 								</li>
 								{this.state.topics.map((item)=>{
 									return(
-										<li onClick={()=>{self._handleTopicChange(item)}}>
+										<li style={{cursor: 'pointer'}} onClick={()=>{self._handleTopicChange(item)}}>
 											<div className={this.state.currentTopic == item ? 'active topic-item' : 'topic-item'}>
 												{item}
 											</div>
@@ -192,7 +192,7 @@ let Pack = React.createClass({
 					<ul className="material-list">
 						{this.state.packs.map((item)=>{
 							return(
-								<li className="row middle-xs" onClick={()=>{this._enterPack(item.id)}}>
+								<li className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterPack(item.id)}}>
 									<div className="col-xs-6">
 										<img src={item.thumb} className="material-img" />
 									</div>

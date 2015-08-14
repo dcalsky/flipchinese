@@ -1,20 +1,23 @@
 .tabs {
 	padding: 0;
 	margin: 0 !important;
-	.tab {
-		padding: 0;
+	.tab-header {
 		margin: 0;
-		.tab-header {
+		padding: 0;
+		height: 48px;
+		min-width: 36px;
+		cursor: pointer;
+		border-bottom: 1px solid transparent;
+		.tab-header-item {
 			background-color: #1967d2;
-			padding: 10px;
+			height: 100%;
 			margin: 0 0;
-			height: 48px;
-			min-width: 36px;
 		    cursor: pointer;
 		    border-bottom: 1px solid transparent;
 		    p {
-				font-size: 16px;
+				font-size: 1em;
 				font-weight: 300;
+				line-height: 48px;
 				color: white;
 				opacity: 0.6;
 		    }
@@ -30,16 +33,18 @@
 			    background-color: rgb(255, 64, 129);
 		   	}
 		}
-		.active {
-			border-bottom: 1px solid #ff3b77;
-			p {
-				opacity: 1;
-			}
+	}
+	.active {
+		border-bottom: 1px solid #ff3b77 !important;
+		p {
+			opacity: 1 !important;
 		}
 	}
 	.tabs-content {
+		position: relative;
+		display: block;
 		background-color: #fff;
-		padding: 10px;
 		width: 100%;
+		padding: 0;
 	}
 }

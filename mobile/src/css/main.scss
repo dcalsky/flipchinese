@@ -7,20 +7,24 @@
 
 @import 'fast';
 @import 'material';
+@import 'account';
 
 * {
 	margin: 0;
 	padding: 0;
+  outline: none;
 }
 
 .app {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .main {
-  padding-bottom: 30px;
+  padding-bottom: 40px;
 }
 
 html {

@@ -5,7 +5,7 @@ let Router = require('react-router');
 let Home = React.createClass({
 	mixins: [Router.Navigation],
 	_enterMaterial(id){
-		this.transitionTo('/material/' + id);
+		this.transitionTo('/material/355');
 		alert('123');
 	},
     render() {

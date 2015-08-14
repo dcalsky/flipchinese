@@ -23,6 +23,16 @@ let Login = React.createClass({
 	   		signCompleted: true,
 	    };
 	},
+	componentWillMount() {
+	    if(cookie.get('user_id') && cookie.get('auth_token')){
+	      this.goBack();
+	    }
+	    if(cookie.get('email')){
+	      this.setState({
+	        email: cookie.get('email'),
+	      });
+	    }
+	},
 	_handleRegister(e){
 		e.preventDefault();
 	    if(!(this.isValid('email') && this.isValid('username') && this.isValid('password') && this.isValid('verifyPassword'))){
@@ -72,7 +82,7 @@ let Login = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
 						<li className="appbar-title col-xs-9 row center-xs">

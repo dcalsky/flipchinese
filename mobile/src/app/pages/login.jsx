@@ -21,7 +21,7 @@ let Login = React.createClass({
 	},
   	componentWillMount() {
 	    if(cookie.get('user_id') && cookie.get('auth_token')){
-	      //this.transitionTo('account');
+	      this.goBack();
 	    }
 	    if(cookie.get('email')){
 	      this.setState({
@@ -76,7 +76,7 @@ let Login = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
+						<li style={{cursor: 'pointer'}} className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
 						<li className="appbar-title col-xs-9 row center-xs">
@@ -109,7 +109,7 @@ let Login = React.createClass({
 							/>
 						</div>
 						{this.getValidationMessages('password').map(this.renderHelpText)}
-						<div className="button-group">
+						<div className="col-xs-12 button-group">
 							<button type="button" className="button-raised" onClick={this._turnToSign}>Register</button>
 							<button type="submit" className="button-raised" disabled={this.state.loginCompleted ? false : true} style={{backgroundColor: '#02b81b', color: '#fff'}} >{this.state.loginCompleted ? 'login' : 'logining...'}</button>
 						</div>

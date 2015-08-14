@@ -1,0 +1,101 @@
+.account {
+	padding: 10px;
+	margin: 0;
+	background-color: #fff;
+	color: #000;
+	.account-username {
+		font-size: 1.4em;
+		font-weight: 700;
+		margin: 5px 0;
+	}
+	.account-level {
+		font-size: 1em;
+		font-weight: 400;
+	}
+	.account-avatar {
+		height: 60px;
+		width: 60px;
+	}
+}
+.history-task {
+	padding-bottom: 30px;
+	.history-task-header {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		li {
+			padding: 15px;
+			color: #000;
+			background-color: #e5e5e5;
+		}
+	}
+	.history-task-list {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		.history-task-list-item {
+			list-style: none;
+			width: 100%;
+			margin: 0;
+			padding: 10px 0;
+			border-bottom: 1px solid #e5e5e5;
+			.history-task-list-item-button {
+				margin: 0;
+				padding: 0;
+			}
+		}
+		.history-task-detail {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			background-color: #fafafa;
+			border-top: 1px solid #e5e5e5;
+			.history-task-detail-item {
+				margin: 5px 0;
+				border-bottom: 1px solid #e5e5e5;
+				.history-task-detail-title {
+					display: block;
+					font-weight: 500;
+					font-size: 1.2em;
+				}
+				.history-task-detail-content {
+					line-height: 1.2em;
+					padding-left: 5px;
+					color: #626262;
+				}
+			}
+
+		}
+	}
+}
+
+.personal-info {
+	.personal-info-list {
+		padding: 10px;
+		.personal-info-list-item {
+			padding: 15px 0;
+			border-bottom: 1px solid #e5e5e5;
+			select {
+			    color: #999;
+			    height: 35px;
+			    font-size: 1.2em;
+			    background: #fff;
+			    &:focus {
+			    	border: 1px solid #d0d6d9;
+			    }
+			}
+			input {
+				border: 0;
+				border-bottom: 1px solid #eee;
+				height: 35px;
+				width: 120px;
+				text-align: left;
+				font-size: 1.2em;
+				padding: 0;
+			    &:focus {
+			    	border: 1px solid #d0d6d9;
+			    }
+			}
+		}
+	}
+}

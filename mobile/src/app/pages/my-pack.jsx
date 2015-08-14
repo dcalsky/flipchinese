@@ -22,7 +22,7 @@ let MyPack = React.createClass({
 		if(cookie.get('user_id') && cookie.get('auth_token')){
 			this.getPacks(cookie.get('user_id'), cookie.get('auth_token'));
 		}else{
-			this.transitionTo('login');
+			window.location.href = '#/login';
 		}  
 	},
 	getPacks(user_id, auth_token){
@@ -65,13 +65,13 @@ let MyPack = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
 						<li className="appbar-title col-xs-9 row center-xs">
 							<h4>My Packs</h4>
 						</li>
-						<li className="col-xs-1 end-xs" onClick={()=>{
+						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
 								this.transitionTo('account');
 							}else{
@@ -86,7 +86,7 @@ let MyPack = React.createClass({
 					<ul className="material-list">
 						{this.state.packs.map((item)=>{
 							return(
-								<li className="row middle-xs" onClick={()=>{this._enterPack(item.pack.id)}}>
+								<li className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterPack(item.pack.id)}}>
 									<div className="col-xs-6">
 										<img src={item.pack.thumb} className="material-img" />
 									</div>

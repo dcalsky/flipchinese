@@ -110,14 +110,14 @@ let Fast = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs" onClick={this._spreadTopic}>
+						<li className="appbar-title col-xs-9 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
 							<h4>Fast</h4>
-							<i className="zmdi zmdi-caret-down bottom-xs"></i>
+							<i className="zmdi zmdi-caret-down"></i>
 						</li>
-						<li className="col-xs-1 end-xs" onClick={()=>{
+						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
 								this.transitionTo('account');
 							}else{
@@ -132,26 +132,26 @@ let Fast = React.createClass({
 						this.state.topicSpread?
 						<section className="material-list">
 							<ul className="topic-list">
-								<li onClick={()=>{self._handleLevelChange('')}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange('')}}>
 									<div className={this.state.currentLevel == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
 										All Levels
 									</div>
 									<hr className="topic-line-kind" />
 								</li>
-								<li onClick={()=>{self._handleLevelChange(11)}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange(11)}}>
 									<div className={this.state.currentLevel == 11 ? 'active topic-item' : 'topic-item'}>
 										Just Arrived
 									</div>
 									<hr className="topic-line-item" />
 								</li>
-								<li onClick={()=>{self._handleLevelChange(12)}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange(12)}}>
 									<div className={this.state.currentLevel == 12 ? 'active topic-item' : 'topic-item'}>
 										Stayed Months or Years
 									</div>
 									<hr className="topic-line-item" />
 								</li>
 								<br />
-								<li onClick={()=>{self._handleTopicChange('')}}>
+								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleTopicChange('')}}>
 									<div className={this.state.currentTopic == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>
 										All Topics
 									</div>
@@ -159,7 +159,7 @@ let Fast = React.createClass({
 								</li>
 								{this.state.topics.map((item)=>{
 									return(
-										<li onClick={()=>{self._handleTopicChange(item)}}>
+										<li style={{cursor: 'pointer'}} onClick={()=>{self._handleTopicChange(item)}}>
 											<div className={this.state.currentTopic == item ? 'active topic-item' : 'topic-item'}>
 												{item}
 											</div>
@@ -176,7 +176,7 @@ let Fast = React.createClass({
 					<ul className="material-list">
 						{this.state.materials.map((item)=>{
 							return(
-								<li className="row middle-xs" onClick={()=>{this._enterMaterial(item.id)}}>
+								<li style={{cursor: 'pointer'}} className="row middle-xs" onClick={()=>{this._enterMaterial(item.id)}}>
 									<div className="col-xs-6">
 										<img src={item.thumb} className="material-img" />
 									</div>

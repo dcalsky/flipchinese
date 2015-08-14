@@ -23,6 +23,8 @@ let Tabs = React.createClass({
     render(){
     	let self = this;
     	let tabContent = [];
+
+    	/* tab --> tab-header --> tab-header-item */
 	    let tabs = React.Children.map(this.props.children, function (tab, index) {
 	    	if (tab.type == 'tab') {
 		        tabContent.push(React.cloneElement(TabContent, {
@@ -31,21 +33,18 @@ let Tabs = React.createClass({
 		            style: tab.props.style
 		        }, tab.props.children));
 		        return React.createElement('div', {
-			        key: index,
-			        className: "tab col-xs",
-			        selected: self.state.selectedIndex === index,
-			        tabIndex: index,
-		        },
-		        	React.createElement('div',{
-		        			className: self.state.selectedIndex === index ? 'tab-header row center-xs middle-xs active' : 'tab-header row center-xs middle-xs',
-		        			tabIndex: index,
-		        			handleTouchTap: self._handleTouchTap,
-		        			onClick: function(){self._handleTouchTap(index)}
-		        		},
-		        		React.createElement('p',{},tab.props.title)
-		        	),
-		        );
-    		}
+				        key: index,
+				        className: "tab-header col-xs-" + (12/this.props.children.length).toString(),
+				        selected: self.state.selectedIndex === index,
+				        tabIndex: index,
+				        style: tab.props.style
+		        	},React.createElement('div', {
+	        			className: self.state.selectedIndex === index ? 'tab-header-item center-xs active' : 'tab-header-item center-xs middle-xs',
+	        			tabIndex: index,
+	        			handleTouchTap: self._handleTouchTap,
+	        			onClick: function(){self._handleTouchTap(index)}
+		        	},React.createElement('p',{},tab.props.title)))
+	    		}
 	    }, this);
 	    return(
 			React.createElement(
@@ -64,7 +63,7 @@ let TabContent = React.createClass({
 		if(this.props.selected){
 		    return React.createElement(
 		      'div',
-		      { className: "tabs-content", onTouchTap: this.handleTouchTap, style: this.props.style },
+		      { className: "tabs-content col-xs-12", onTouchTap: this.handleTouchTap },
 		      this.props.children
 		    );
 		}else{
