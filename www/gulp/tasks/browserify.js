@@ -49,7 +49,7 @@ gulp.task('browserify', ['jshint'], function(callback) {
         // desired output filename here.
         .pipe(source(bundleConfig.outputName))
         .pipe(buffer())
-        .pipe(uglify())
+        //.pipe(uglify())
         // Create independent source map file in the build directory
         //.pipe(sourcemaps.init({loadMaps: true}))
         //.pipe(sourcemaps.write('./'))

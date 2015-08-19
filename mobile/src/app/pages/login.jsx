@@ -36,7 +36,7 @@ let Login = React.createClass({
 	},
 	_handleLogin(e){
 		e.preventDefault();
-	    if(!(this.isValid('email') && this.isValid('password'))){
+	    if(!this.isValid('email') || !this.isValid('password') || !this.state.password || !this.state.email){
 	      return;
 	    }
 		this.setState({loginCompleted: false});
@@ -60,16 +60,17 @@ let Login = React.createClass({
 	        }else{
 	          cookie.set('email','');
 	        }
-	        self.transitionTo('account');
+	        self.transitionTo('/main/account');
 	        self.setState({loginCompleted: true,});
 	      }
 	      , error(err){
       		console.log(err);
+      		self.setState({loginCompleted: true,});
 	      }
 	    });
 	},
 	_turnToSign(){
-		this.transitionTo('sign');
+		this.transitionTo('/main/sign');
 	},
 	render(){
 		return(
@@ -86,6 +87,8 @@ let Login = React.createClass({
 				</section>
 				<section style={{backgroundColor: '#fafafa', height: window.innerHeight-150, padding: '40px 0'}}>
 					<form onSubmit={this._handleLogin} className="center-xs middle-xs">
+						<img src="./images/logo_blue.png" style={{height: 80, width: 80}} />
+						<h4 style={{fontSize: '1.6em', color: '#1967d2', marginBottom: 10}}>Flip Chinese</h4>
 						<div className="input-group">
 							<i className="zmdi zmdi-email"></i>
 							<input 
@@ -110,8 +113,8 @@ let Login = React.createClass({
 						</div>
 						{this.getValidationMessages('password').map(this.renderHelpText)}
 						<div className="col-xs-12 button-group">
-							<button type="button" className="button-raised" onClick={this._turnToSign}>Register</button>
-							<button type="submit" className="button-raised" disabled={this.state.loginCompleted ? false : true} style={{backgroundColor: '#02b81b', color: '#fff'}} >{this.state.loginCompleted ? 'login' : 'logining...'}</button>
+							<button type="button" className="button-raised" style={{backgroundColor: '#1967d2', color: '#fff'}} onClick={this._turnToSign} >Register</button>
+							<button type="submit" className="button-raised" disabled={this.state.loginCompleted ? false : true} style={{backgroundColor: '#ff3b77', color: '#fff'}} >{this.state.loginCompleted ? 'login' : 'logining...'}</button>
 						</div>
 					</form>
 				</section>

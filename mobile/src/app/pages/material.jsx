@@ -20,6 +20,7 @@ let Material = React.createClass({
                 audio: null,
                 text: null,
                 thumb: null,
+                image: null,
             },
             scripts: {
                 hanzi: null,
@@ -40,7 +41,7 @@ let Material = React.createClass({
 	getMaterial(){
         let self = this;
 	    reqwest({
-	        url: self.getQuery().free == 1 ? 'http://api.flipchinese.com/api/v1/materials/' + this.getParams().id : 'http://api.flipchinese.com/api/v1/materials/' + this.getParams().id + '?user_id=' + cookie.get('user_id') + '&auth_token=' + cookie.get('auth_token')
+	        url: 'http://api.flipchinese.com/api/v1/materials/' + this.getParams().id + '?user_id=' + cookie.get('user_id') + '&auth_token=' + cookie.get('auth_token')
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
@@ -107,7 +108,7 @@ let Material = React.createClass({
 	                        <button className="button-raised" onClick={()=>{window.open(this.props.pdf)}}>Download PDF</button>
 	                      </div>;
 
-	        let mediaMeal = this.state.media.video ? videoMeal : this.state.media.video ? videoMeal : this.state.media.pdf ? pdfMeal : this.state.media.audio ? audioMeal : this.state.media.text ? wordMeal : <Error show={true} desc="Find Nothing ..."/> ;
+            let mediaMeal = this.state.media.video ? videoMeal : this.state.media.video ? videoMeal : this.state.media.pdf ? pdfMeal : this.state.media.audio ? audioMeal : this.state.media.text ? wordMeal : this.state.media.image ? <img src={this.state.media.image} style={styles.image} /> : this.state.media.thumb ? <img src={this.state.media.thumb} style={styles.thumb} /> : null  ;
 	        let hanziMeal = <div className="hanziMeal" dangerouslySetInnerHTML={{__html: this._combineText(this.state.scripts.pinyin, this.state.scripts.hanzi,'\r')}} />;
 	        let translationMeal = <div className="hanziMeal" dangerouslySetInnerHTML={{__html: this._filterText(this.state.scripts.translation)}} />;
 			return(
@@ -118,13 +119,13 @@ let Material = React.createClass({
 								<i className="zmdi zmdi-chevron-left"></i>
 							</li>
 							<li className="appbar-title col-xs-9 row center-xs">
-								<h4>Material</h4>
+								<h4>{this.state.title ? this.state.title : 'Material'}</h4>
 							</li>
                             <li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
                                 if(cookie.get('user_id') && cookie.get('auth_token')){
-                                    this.transitionTo('account');
+                                    this.transitionTo('/main/account');
                                 }else{
-                                    this.transitionTo('login');
+                                    this.transitionTo('/main/login');
                                 }
                             }}>
                                 <i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>
@@ -141,10 +142,14 @@ let Material = React.createClass({
                             
                             <Tabs>
                                 <tab title="hanzi & pinyin" style={{fontSize: 14}}>
-                                    {hanziMeal}
+                                    <div style={{padding: 10}}>
+                                        {hanziMeal}
+                                    </div>
                                 </tab>
                                 <tab title="translation" style={{fontSize: 14}}>
-                                    {translationMeal}
+                                    <div style={{padding: 10}}>
+                                        {translationMeal}
+                                    </div>
                                 </tab>
                             </Tabs>
 	                    </div>

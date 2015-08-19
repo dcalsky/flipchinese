@@ -99,7 +99,7 @@ let Fast = React.createClass({
 		});
 	},
 	_enterMaterial(id){
-		this.transitionTo('/material/' + id ,{},{free: 1});
+		this.transitionTo('/main/material/' + id ,{},{free: 1});
 	},
 	_loadMore(){
 		this.getMaterial(++this.page,this.state.currentTopic,this.state.currentLevel,'',false);
@@ -119,9 +119,9 @@ let Fast = React.createClass({
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
-								this.transitionTo('account');
+								this.transitionTo('/main/account');
 							}else{
-								this.transitionTo('login');
+								this.transitionTo('/main/login');
 							}
 						}}>
 							<i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>

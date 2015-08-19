@@ -25,24 +25,15 @@ let fetcher = {
                 window.location.href = '#/main/connect-error';
             });
     },
-    getTaskResults(user_id, auth_token, callback) {
-        fetch('http://api.flipchinese.com/api/v1/users/' + user_id + '/content?user_id=' + user_id + '&auth_token=' + auth_token)
-            .then(checkStatus)
-            .then(function (data) {
-                callback(data)
-            }).catch(function (error) {
-                console.log(error);
-                window.location.href = '#/main/connect-error';
-            });
-    },
-    postTaskResults(user_id, auth_token, task_id, learner_on_task, learner_on_tutor, start_time, end_time, callback){
-        fetch('http://api.flipchinese.com/api/v1/task_results/' + task_id, {
+    postTaskResults(result_id, user_id, auth_token, task_id, learner_on_task, learner_on_tutor, start_time, end_time, callback){
+        fetch('http://api.flipchinese.com/api/v1/task_results/' + result_id, {
             method: 'put',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                id: result_id,
                 user_id: user_id,
                 auth_token: auth_token,
                 task_result: {
@@ -101,27 +92,13 @@ let Task = React.createClass({
             startTime: new Date()
         });
         var self = this;
-        fetcher.getTaskResults(cookie.get('user_id'), cookie.get('auth_token'), function (data) {
-            let task = !(data.task_ids.indexOf(parseInt(self.getParams().id)) === -1)
-            if (task) {
-                if (task.fulfilled == true) {
-                    self.setState({
-                        isDone: true
-                    });
-                }
-                fetcher.get(self.getParams().id, function (data) {
-                    self.setState({
-                        taskLoadComplete: true,
-                        title: data.task.title,
-                        parts: data.task.parts
-                    });
-                });
-            } else {
-                self.setState({
-                    taskLoadComplete: true,
-                    findNothing: true
-                });
-            }
+        fetcher.get(self.getParams().id, function (data) {
+            self.setState({
+                taskLoadComplete: true,
+                title: data.task.title,
+                parts: data.task.parts,
+                isDone: self.getQuery().fulfilled == 'true' ? true : false,
+            });
         });
     },
     dialogShow(){
@@ -138,9 +115,14 @@ let Task = React.createClass({
           'where': "task",
         });
         let self = this;
-        fetcher.postTaskResults(cookie.get('user_id'), cookie.get('auth_token'), this.getParams().id, this.state.learner_on_task, this.state.learner_on_tutor, this.state.startTime, new Date(), function (data) {
+        fetcher.postTaskResults(this.getQuery().result_id, cookie.get('user_id'), cookie.get('auth_token'), this.getParams().id, this.state.learner_on_task, this.state.learner_on_tutor, this.state.startTime, new Date(), function (data) {
+            console.log(data)
             self.refs.finishDialog.dismiss();
-            location.reload();
+            // bad way !!!
+            window.location.href = 'http://localhost:3000/#/main/task/'+ self.getParams().id + '?result_id=' + self.getQuery().result_id + '&fulfilled=true'
+            self.setState({
+                isDone: true,
+            });
         });
     },
     render() {

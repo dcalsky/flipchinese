@@ -22,7 +22,7 @@ let MyPack = React.createClass({
 		if(cookie.get('user_id') && cookie.get('auth_token')){
 			this.getPacks(cookie.get('user_id'), cookie.get('auth_token'));
 		}else{
-			window.location.href = '#/login';
+			window.location.href = '#/main/login';
 		}  
 	},
 	getPacks(user_id, auth_token){
@@ -57,7 +57,7 @@ let MyPack = React.createClass({
 	    });
 	},
 	_enterPack(id){
-		this.transitionTo('/pack-inside/' + id);
+		this.transitionTo('/main/pack-inside/' + id);
 	},
 	render(){
 		let self = this;
@@ -73,9 +73,9 @@ let MyPack = React.createClass({
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
-								this.transitionTo('account');
+								this.transitionTo('/main/account');
 							}else{
-								this.transitionTo('login');
+								this.transitionTo('/main/login');
 							}
 						}}>
 							<i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>
@@ -115,7 +115,7 @@ let MyPack = React.createClass({
 				}
 				{
 					this.state.findNothing?
-					<Error content="Find Nothing..." buttonLabel="To Buy Pack" handleBack={()=>{this.transitionTo('focus')}} />
+					<Error content="Find Nothing..." buttonLabel="To Buy Pack" handleBack={()=>{this.transitionTo('/main/focus')}} />
 					:
 					null
 				}

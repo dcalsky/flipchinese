@@ -19,7 +19,17 @@ let Content = require('../components/content.jsx');
 let checkStatus = require('../../utils/check-status.js');
 
 let fetcher = {
-    get(id, callback) {
+    getPack_item(id, callback) {
+        fetch('http://api.flipchinese.com/api/v1/users/pack_items/' + id)
+            .then(checkStatus)
+            .then(function (data) {
+                callback(data)
+            }).catch(function (error) {
+                console.log(error)
+                window.location.href = '#/main/connect-error';
+            });
+    },
+    getPack(id, callback) {
         fetch('http://api.flipchinese.com/api/v1/packs/' + id)
             .then(checkStatus)
             .then(function (data) {
@@ -30,7 +40,7 @@ let fetcher = {
             });
     },
     getMyPacks(user_id, auth_token, callback) {
-        fetch('http://api.flipchinese.com/api/v1/users/' + user_id + '/pack_items?user_id=' + user_id + '&auth_token=' + auth_token)
+        fetch('http://api.flipchinese.com/api/v1/users/' + user_id + '/content?id=' + user_id + '&user_id=' + user_id + '&auth_token=' + auth_token)
             .then(checkStatus)
             .then(function (data) {
                 callback(data)
@@ -39,6 +49,7 @@ let fetcher = {
                 window.location.href = '#/main/connect-error';
             });
     },
+
     done(id, user_id, auth_token, callback) {
         fetch('http://api.flipchinese.com/api/v1/packs/' + id + '/done', {
             method: 'post',
@@ -77,45 +88,43 @@ let PackPage = React.createClass({
             price: 0,
             ableToCart: true,
             addButtonLabel: 'Add To Cart',
+            mine: false,
         };
     },
     componentWillMount() {
         mixpanel.track("open", {
           'where': "pack inside",
         });
-        this.getMine();
-    },
-    getMine(){
-        let self = this;
-        if(cookie.get('user_id') && cookie.get('auth_token')){
-            fetcher.getMyPacks(cookie.get('user_id'), cookie.get('auth_token'), function (pack) {
-                pack.pack_items.map(function (pack_item) {
-                    if (pack_item.pack_id == self.getParams().id) {
-                        self.setState({
-                            isMine: true
-                        });
-                        if (pack_item.done)
-                            self.setState({
-                                isDone: true
-                            });
-                    }
-                });
-                self.getPack();
-            });
+        if(this.getQuery().pack_item){
+            this.getPack_item()
         }else{
-            self.getPack();
+            this.getPack()
         }
+        
+    },
+    getPack_item(){
+        let self = this;
+        this.cart_string = JSON.parse(storage.get('cart')) || [];
+        fetcher.getPack_item(this.getQuery().pack_item, function (data) {
+            self.setState({
+                taskLoadComplete: true,
+                title: data.pack_item.title,
+                intro: data.pack_item.intro,
+                materials: data.pack_item.materials,
+                tasks: data.pack_item.task_results,
+                id: data.pack_item.id,
+                materialLength: data.pack_item.materials.length,
+                taskLength: data.pack_item.length,
+                price: data.pack_item.price,
+                packType: 'pack_item',
+                mine: true,
+            });
+        });
     },
     getPack(){
         let self = this;
-        this.cart_string = JSON.parse(storage.get('cart'));
-        fetcher.get(this.getParams().id, function (data) {
-            data.pack.materials.map(function (item) {
-                item.isMine = self.state.isMine;
-            });
-            data.pack.tasks.map(function (item) {
-                item.isMine = self.state.isMine;
-            });
+        this.cart_string = JSON.parse(storage.get('cart')) || [];
+        fetcher.getPack(this.getParams().id, function (data) {
             _.map(self.cart_string,function(pack_string){
                 if(pack_string.id == data.pack.id){
                     self.setState({
@@ -124,16 +133,21 @@ let PackPage = React.createClass({
                     });
                 }
             });
-            self.setState({
-                taskLoadComplete: true,
-                title: data.pack.title,
-                intro: data.pack.intro,
-                materials: data.pack.materials,
-                tasks: data.pack.tasks,
-                id: data.pack.id,
-                materialLength: data.pack.materials.length,
-                taskLength: data.pack.tasks.length,
-                price: data.pack.price,
+            fetcher.getMyPacks(cookie.get('user_id'), cookie.get('auth_token'), function(userContent){
+                let mine = !(userContent.pack_ids.indexOf(parseInt(self.getParams().id)) === -1)
+                self.setState({
+                    mine: mine,
+                    taskLoadComplete: true,
+                    title: data.pack.title,
+                    intro: data.pack.intro,
+                    materials: data.pack.materials,
+                    tasks: data.pack.tasks,
+                    id: data.pack.id,
+                    materialLength: data.pack.materials.length,
+                    taskLength: data.pack.length,
+                    price: data.pack.price,
+                    packType: 'pack_id',
+                })
             });
         });
     },
@@ -141,7 +155,7 @@ let PackPage = React.createClass({
         mixpanel.track("back", {
           'where': "pack inside",
         });
-        this.transitionTo('packs');
+        this.goBack();
     },
     addToCart(){
         mixpanel.track("add to cart", {
@@ -177,8 +191,8 @@ let PackPage = React.createClass({
         }
     },
     render() {
+        let self = this;
         if (this.state.taskLoadComplete) {
-            console.log(this.state.isMine);
             return (
                 <div>
                     <div style={{display: this.state.taskLoadComplete ? 'block' : 'none'}}>
@@ -203,7 +217,7 @@ let PackPage = React.createClass({
                                 <div className="card">
                                     <ul className="content-list row center-xs">
                                         {this.state.materials.map(function (item) {
-                                            return <Content key={item.id} item={item} type="material"/>
+                                            return <Content key={item.id} item={item} type="material" free={self.state.mine}/>
                                         })}
                                     </ul>
                                 </div>
@@ -218,8 +232,12 @@ let PackPage = React.createClass({
                                     Tasks</h3>
                                 <div className="card">
                                     <ul  className="content-list row center-xs">
-                                        {this.state.tasks.map(function (item) {
-                                            return <Content key={item.id} item={item} type="task"/>
+                                        {self.state.tasks.map(function (item) {
+                                            if(self.state.packType == 'pack_item'){
+                                                return <Content key={item.id} item={item.task} result_id={item.id} fulfilled={item.fulfilled} type="task" free={self.state.mine} />
+                                            }else{
+                                                return <Content key={item.id} item={item} type="task" buttonLabel="Go to My Pack" />
+                                            }
                                         })}
                                     </ul>
                                 </div>
@@ -243,9 +261,11 @@ let PackPage = React.createClass({
                             </div>
                         </div>
                         {
-                            this.state.isMine
+                            this.state.mine
                             ?
-                            null
+                            <div>
+                                <RaisedButton label="< Back" secondary={true} onClick={this.back} style={{width: '100%'}}/>
+                            </div>
                             :
                             <div className="row center-xs" style={{padding: '0 90px'}}>
                                 <div className="col-xs-12 col-sm-6 col-md-6">

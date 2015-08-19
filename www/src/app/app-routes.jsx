@@ -31,8 +31,6 @@ let Teacher = require('./pages/teacher/main.jsx');
 let SignIn = require('./pages/sign-in.jsx');
 let SignUp = require('./pages/sign-up.jsx');
 let Fast = require('./pages/fast.jsx');
-let MaterialFree = require('./pages/material-free.jsx');
-let MaterialId = require('./pages/material-free-id.jsx');
 
 window.current_user = window.current_user || {}
 
@@ -51,10 +49,6 @@ var AppRoutes = (
       <Route name="sign-in" handler={SignIn} />
       <Route name="sign-up" handler={SignUp} />
       <Route name="fast" handler={Fast} />
-
-      <Route name="material-free" handler={MaterialFree}>
-        <Route name="material-free-id" path="/material-free-id/:id" handler={MaterialId}/>
-      </Route>
 
       <Route name="main" handler={Main}>
         <Route name="packs" handler={Packs} />

@@ -118,7 +118,7 @@ let fetcher = {
       });
   },
   getMyPacks(id,user_id,auth_token,callback) {
-    fetch('http://api.flipchinese.com/api/v1/users/'+id+'/pack_items?id='+id+'&user_id='+user_id+'&auth_token='+auth_token)
+    fetch('http://api.flipchinese.com/api/v1/users/'+id+'/content?id='+id+'&user_id='+user_id+'&auth_token='+auth_token)
       .then(checkStatus)
       .then(function (data) {
           callback(data)
@@ -154,7 +154,7 @@ let Content = React.createClass({
     }
   },
   view(){
-    this.transitionTo('/main/packs/'+this.props.item.id);
+    this.transitionTo('/main/packs/' + this.props.item.id);
   },
   _handleCustomDialogGo(){
     this.transitionTo('/main/cart');
@@ -167,6 +167,7 @@ let Content = React.createClass({
       return(
         <div style={styles.pack} className="row">
           <div className="col-md-4 col-sm-4 col-xs-12" style={styles.imageBox}>
+            <img src={this.props.item.thumb} style={styles.image}/>
           </div>
           <div style={styles.info} className="col-md-3 col-sm-11 col-xs-12">
             <li style={styles.title}>{this.props.item.title}</li>
@@ -239,7 +240,7 @@ let Pack = React.createClass({
   page: 1,
   topic: '',
   level: '',
-  myPacks: [],
+  myPacks_ids: [],
   cart: [],
   contextTypes() {
     router: React.PropTypes.func
@@ -269,9 +270,7 @@ let Pack = React.createClass({
   getMine(){
     let self = this ;
     fetcher.getMyPacks(cookie.get('user_id'),cookie.get('user_id'),cookie.get('auth_token'),function(data){
-      data.pack_items.map(function(pack_item){
-        self.myPacks = self.myPacks.concat(pack_item);
-      });
+      self.myPacks_ids = data.pack_ids
       self.getPack(1,'','','',true);
     });
   },
@@ -378,18 +377,15 @@ let Pack = React.createClass({
   },
   _filterMyPack(packs){
     let self = this ;
-    let _packs = packs;
-    if(self.myPacks == false){
+    if(self.myPacks_ids == []){
       return packs;
     }
-    _.map(_packs,function(pack){
-      _.map(self.myPacks,function(myPack){
-        if(myPack.pack_id == pack.id){
+    _.map(packs,function(pack){
+        if(self.myPacks_ids.indexOf(pack.id) != -1){
           pack['isMine'] = true;
         }
-      })
     });
-    return _packs;
+    return packs;
   },
   addToCart(pack){
     mixpanel.track("add to cart", {

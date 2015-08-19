@@ -83,7 +83,7 @@ let Fast = React.createClass({
 	},
 	_enterMaterial(id){
 		if(this.state.ableToEnter){
-			this.transitionTo('/material/' + id);
+			this.transitionTo('/main/material/' + id);
 		}else{
 			alert('Please login or buy this pack...');
 		}
@@ -91,7 +91,7 @@ let Fast = React.createClass({
 	},
 	_enterTask(id){
 		if(this.state.ableToEnter){
-			this.transitionTo('/task/' + id);
+			this.transitionTo('/main/task/' + id);
 		}else{
 			alert('Please log in or buy this pack...');
 		}
@@ -110,9 +110,9 @@ let Fast = React.createClass({
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
-								this.transitionTo('account');
+								this.transitionTo('/main/account');
 							}else{
-								this.transitionTo('login');
+								this.transitionTo('/main/login');
 							}
 						}}>
 							<i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>
@@ -170,7 +170,7 @@ let Fast = React.createClass({
 										return(
 											<li key={item.id} className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterTask(item.id)}}>
 												<div className="col-xs-6">
-													<img src={item.thumb} className="material-img" />
+													<img src={item.parts[0].thumb} className="material-img" />
 												</div>
 												<div className="col-xs-6">
 													<h4 className="material-title">{item.title}</h4>

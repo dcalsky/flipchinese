@@ -100,7 +100,7 @@ let Pack = React.createClass({
 		this.getPacks(++this.page,this.state.currentTopic,this.state.currentLevel,'',false);
 	},
 	_enterPack(id){
-		this.transitionTo('/pack-inside/' + id);
+		this.transitionTo('/main/pack-inside/' + id);
 	},
 	render(){
 		let self = this;
@@ -117,9 +117,9 @@ let Pack = React.createClass({
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
-								this.transitionTo('account');
+								this.transitionTo('/main/account');
 							}else{
-								this.transitionTo('login');
+								this.transitionTo('/main/login');
 							}
 						}}>
 							<i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>

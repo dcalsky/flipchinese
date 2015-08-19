@@ -246,7 +246,7 @@ let Public = React.createClass({
                 <div className="card" style={{paddingTop: 30}}>
                   <ul className="content-list row center-xs" >
                       {this.state.materials.map(function (item) {
-                        return <Content item={item} type="material" free={true} enter="material-free-id" />
+                        return <Content item={item} type="material" free={true} />
                       })}
                   </ul>
                 </div>

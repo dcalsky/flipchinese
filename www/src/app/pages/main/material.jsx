@@ -8,9 +8,9 @@ let mui = require('material-ui');
 let {  RaisedButton, Tabs, Tab, Paper } = mui;
 let _ = require('underscore');
 
+let Error = require('../components/error.jsx');
 let MainStyle = require('../styles/main-style.jsx');
 let Progress = require('../components/progress.jsx');
-let Error = require('../components/error.jsx');
 
 let checkStatus = require('../../utils/check-status.js');
 
@@ -42,9 +42,14 @@ let styles = {
         width: '100%',
     },
     footer: {
+        display: 'block',
         padding: '25px 0',
     },
     image: {
+        width: '100%',
+        height: 'auto',
+    },
+    thumb: {
         width: '100%',
         height: 'auto',
         paddingTop: 20,
@@ -140,6 +145,7 @@ let Material = React.createClass({
                     pdf: data.material.pdf,
                     text: data.material.text,
                     thumb: data.material.thumb,
+                    image: data.material.image
                 },
                 scripts: {
                     hanzi: data.material.hanzi,
@@ -147,9 +153,9 @@ let Material = React.createClass({
                     pinyin: data.material.pinyin
                 },
                 kp: {
-                    grammar: data.material.grammar,
-                    voc: data.material.voc,
-                    character: data.material.character
+                    grammar: data.material.kp_grammar_list,
+                    voc: data.material.kp_vocabulary_list,
+                    character: data.material.kp_character_list
                 },
                 explain: data.material.explain,
                 free: data.material.free,
@@ -200,7 +206,7 @@ let Material = React.createClass({
                                 <audio style={{width: '100%',maxWidth:'560px'}} controls="controls">
                                     <source src={this.state.media.audio} type="audio/mpeg"/>
                                 </audio>
-                                {this.state.scripts.text ? wordMeal : <img src={this.state.media.thumb} style={styles.image} /> }
+                                {this.state.scripts.text ? wordMeal : this.state.media.image ? <img src={this.state.media.image} style={styles.image} /> : <img src={this.state.media.thumb} style={styles.thumb} /> }
                             </div> ; 
             let pdfMeal = <div style={styles.pdfMeal}>
                             <RaisedButton 
@@ -211,12 +217,13 @@ let Material = React.createClass({
                             />
                            </div>;
 
-            let mediaMeal = this.state.media.video ? videoMeal : this.state.media.video ? videoMeal : this.state.media.pdf ? pdfMeal : this.state.media.audio ? audioMeal : this.state.media.text ? wordMeal : <Error show={true} desc="Find Nothing ..."/> ;
+            let mediaMeal = this.state.media.video ? videoMeal : this.state.media.video ? videoMeal : this.state.media.pdf ? pdfMeal : this.state.media.audio ? audioMeal : this.state.media.text ? wordMeal : this.state.media.image ? <img src={this.state.media.image} style={styles.image} /> : this.state.media.thumb ? <img src={this.state.media.thumb} style={styles.thumb} /> : <Error show={true} desc="Find Nothing ..."/>  ;
             let hanziMeal = <div style={styles.hanziMeal} dangerouslySetInnerHTML={{__html: this._combineText(this.state.scripts.pinyin, this.state.scripts.hanzi,'\r')}} />;
             let translationMeal = <div style={styles.hanziMeal} dangerouslySetInnerHTML={{__html: this._filterText(this.state.scripts.translation)}} />;
+
             return (
                 <div className="row center-xs">
-            <div className="start-xs">
+            <div className="start-xs" style={{width: '100%'}}>
                 <div style={styles.title}>
                     <h2 style={MainStyle.headline}>{this.state.title}</h2>
                     <p style={styles.subTitle}>{this.state.intro}</p>
@@ -249,17 +256,17 @@ let Material = React.createClass({
 
                 <div style={styles.footer}>
                     {
-                        this.state.kp.grammar && this.state.kp.voc && this.state.kp.character?
+                        this.state.kp.grammar == [] && this.state.kp.voc == [] && this.state.kp.character == [] ?
                         <div>
                             <Tabs>
                                 <Tab label="Grammar" >
-                                    {this.state.kp.grammar}
+                                    
                                 </Tab>
                                 <Tab label="Voc" >
-                                    {this.state.kp.voc}
+                                    
                                 </Tab>
                                 <Tab label="Character" >
-                                    {this.state.kp.character}
+                                    
                                 </Tab>
                             </Tabs>
                         </div>

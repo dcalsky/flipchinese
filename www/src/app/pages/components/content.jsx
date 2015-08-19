@@ -26,12 +26,11 @@ let styles = {
 let Content = React.createClass({
   mixins: [Router.Navigation],
   enterContent() {
-    if(this.props.enter){
-      this.transitionTo('/'+this.props.enter+'/' + this.props.item.id);
-        mixpanel.track("enter free material");
+        mixpanel.track("enter "+this.props.type);
+    if(this.props.type == 'task' && this.props.result_id){
+      this.transitionTo('/main/' + this.props.type + '/' + this.props.item.id, {}, {result_id: this.props.result_id, fulfilled: this.props.fulfilled});
     }else{
-        mixpanel.track("enter"+this.props.type);
-      this.transitionTo('/main/'+this.props.type+'/' + this.props.item.id);
+      this.transitionTo('/main/' + this.props.type + '/' + this.props.item.id);
     }
   },
   render() {
@@ -73,7 +72,7 @@ let Content = React.createClass({
           </p>
           </div>
         <div className="content-button center-xs">
-          <RaisedButton primary={true} label="Learn" disabled={!abled} onClick={this.enterContent} />
+          <RaisedButton primary={true} label={this.props.buttonLabel ? this.props.buttonLabel : 'Learn'} disabled={!abled} onClick={this.enterContent} />
         </div>
       </li>
     );

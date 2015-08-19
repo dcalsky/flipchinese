@@ -11,23 +11,22 @@ let Task = React.createClass({
 	mixins: [Router.Navigation, Router.State,],
 	getInitialState() {
 	    return {
-            task: null
+            
 	    };
 	},
 	componentWillMount() {
-        this.getTask();
+
 	},
-	getTask(){
+	submitTaskResult(user_id, auth_token, task_id, learner_on_task, learner_on_tutor, start_time, end_time){
         let self = this;
 	    reqwest({
-	        url: 'http://api.flipchinese.com/api/v1/tasks/' + this.getParams().id 
+	        url: 'http://api.flipchinese.com/api/v1/tasks/' + this.getParams().id + '?user_id=' + user_id + '&auth_token=' + auth_token
 	      , type: 'json'
-	      , method: 'get'
+	      , method: 'post'
 	      , success(resp) {
-                self.setState({
-                    task: resp.task,
-                    loadCompleted: true,
-                });
+            self.setState({
+            	    
+            });
 	      }
 	      , error(err){
       		self.setState({
@@ -36,31 +35,33 @@ let Task = React.createClass({
             });
 	      }
 	    });
-	},
-    getTaskResultIds(){
-        let self = this;
-        reqwest({
-            url: 'http://api.flipchinese.com/api/v1/users/' + user_id + '/content?user_id=' + user_id + '&auth_token=' + auth_token + '&id=' + user_id
-          , type: 'json'
-          , method: 'get'
-          , success(resp) {
-                if(resp.task_ids.indexOf(parseInt(self.getParams().id)) === -1){
-                    self.setState({
-                        loadCompleted: true,
-                        findNothing: true,
-                    });
-                    return;
+    postTaskResults(user_id, auth_token, task_id, learner_on_task, learner_on_tutor, start_time, end_time, callback){
+        fetch('http://api.flipchinese.com/api/v1/task_results/' + task_id, {
+            method: 'put',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: user_id,
+                auth_token: auth_token,
+                task_result: {
+                    task_id: task_id,
+                    user_id: user_id,
+                    learner_on_task: learner_on_task,
+                    learner_on_tutor: learner_on_tutor,
+                    start_time: start_time,
+                    end_time: end_time,
+                    fulfilled: true
                 }
-                self.taskResultIds = resp.task
-          }
-          , error(err){
-            self.setState({
-                loadCompleted: true,
-                findNothing: true,
-            });
-          }
+            })
+        }).then(checkStatus).then(function (data) {
+            callback(data)
+        }).catch(function (error) {
+            window.location.href = '#/main/connect-error';
         });
-    },
+    }
+	},
 	render(){
 		if(this.state.loadCompleted){
 			return(
@@ -71,7 +72,7 @@ let Task = React.createClass({
 								<i className="zmdi zmdi-chevron-left"></i>
 							</li>
 							<li className="appbar-title col-xs-9 row center-xs">
-								<h4>{this.state.task.title ? this.state.task.title : 'Task'}</h4>
+								<h4>Task</h4>
 							</li>
                             <li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
                                 if(cookie.get('user_id') && cookie.get('auth_token')){
@@ -86,23 +87,6 @@ let Task = React.createClass({
 					</section>
 					<section>
 
-                        {this.state.task.parts.map((item, index)=>{
-
-                            return (
-                                <div className="explainMeal">
-                                    <div className="explain-header center-xs">
-                                        <p className="middle-xs">{index+1}.{item.title}</p>
-                                    </div>
-                                    <div className="explain-content start-xs" style={{padding: 10}}>
-                                        <p style={{fontSize: '1em',textAlign: 'center', margin: 10}}>
-                                            <i className="zmdi zmdi-time"></i>&nbsp;Expected length:{item.length}
-                                        </p>
-                                        <div className="explain-content-text" dangerouslySetInnerHTML={{__html: item.learner_text}} />
-                                    </div>
-                                </div>
-                            )
-                        })}
-                        <button className="button-raise"
 					</section>
 				</div>
 			);

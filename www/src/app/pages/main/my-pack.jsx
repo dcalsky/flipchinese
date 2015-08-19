@@ -107,7 +107,7 @@ let Content = React.createClass({
       'where': "my pack",
       'id': this.props.item.pack_id,
     });
-    this.transitionTo('/main/packs/'+this.props.item.pack_id); 
+    this.transitionTo('/main/packs/' + this.props.item.id, {}, {pack_item: this.props.item.id}); 
   }, 
   render() {
     return (
@@ -125,8 +125,8 @@ let Content = React.createClass({
               <li style={styles.title}>{this.props.item.pack.title}</li>
               <li>Level:{this.props.item.pack.level}</li>
               <li>Topic:{this.props.item.pack.topic}</li>
-              <li>Material:{this.props.item.pack.materials.length}</li>
-              <li>Tasks:{this.props.item.pack.tasks.length}</li>              
+              <li>Material:{this.props.item.materials ? this.props.item.materials.length : '0'}</li>
+              <li>Tasks:{this.props.item.tasks ? this.props.item.tasks.length : '0'}</li>              
         </div>
         <div style={styles.buttonGroup} className="col-xs-2">
          <RaisedButton primary={true} onClick={this.enterPack} label="Enter" />

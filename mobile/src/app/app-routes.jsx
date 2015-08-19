@@ -19,17 +19,19 @@ let Task = require('./pages/task.jsx');
 let Layout = require('./components/layout.jsx');
 
 let AppRoutes = (
-    <Route path="/" handler={Layout}>
+    <Route path="/">
 	    <Route name="home" handler={Home} />
-	    <Route name="fast" handler={Fast} />
-	    <Route name="focus" handler={Packs} />
-	    <Route name="account" handler={Account} />
-	    <Route name="login" handler={Login} />
-	    <Route name="sign" handler={Sign} />
-	    <Route name="my-pack" handler={MyPack} />
-	    <Route name="material/:id" handler={Material} />
-	    <Route name="task/:id" handler={Task} />
-	    <Route name="pack-inside/:id" handler={PackInside} />	    	    
+	    <Route name="main" handler={Layout}>
+		    <Route name="fast" handler={Fast} />
+		    <Route name="focus" handler={Packs} />
+		    <Route name="account" handler={Account} />
+		    <Route name="login" handler={Login} />
+		    <Route name="sign" handler={Sign} />
+		    <Route name="my-pack" handler={MyPack} />
+		    <Route name="material/:id" handler={Material} />
+		    <Route name="task/:id" handler={Task} />
+		    <Route name="pack-inside/:id" handler={PackInside} />	
+		</Route>    	    
 	    <DefaultRoute  handler={Home}/>
     </Route>
 );

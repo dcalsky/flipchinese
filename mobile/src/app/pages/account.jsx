@@ -31,7 +31,7 @@ let Fast = React.createClass({
 			this.getHistoryTask(1, user_id, auth_token, true);
 			this.getUserInfo(user_id, auth_token)
 		}else{
-			window.location.href = '#/login';
+			window.location.href = '#/main/login';
 		}
 	},
 	getHistoryTask(page, user_id, auth_token, initial){
@@ -266,16 +266,16 @@ let Fast = React.createClass({
 												<ul className="history-task-list-item row middle-xs">
 									                <li className="col-xs-2">{String(startTime.getMonth() + 1) + '.' + startTime.getDate()}</li>
 									                <li className="col-xs-7">{item.task_title}</li>
-									                <li className="col-xs-3 history-task-list-item-button"><button className="button-flat" onClick={()=>{self._showDetail(item.task_id)}}>Detail</button></li>
+									                <li className="col-xs-3 history-task-list-item-button" style={{cursor: 'pointer'}} onClick={()=>{self._showDetail(item.task_id)}}><h3 >Detail <i className="zmdi zmdi-chevron-down"></i></h3></li>
 												</ul>
 								                {
 								                	this.state.currentTaskId == item.task_id?
 								                	<ul className="history-task-detail row middle-xs">
-								                		<li className="history-task-detail-item col-xs-6">
+								                		<li className="history-task-detail-item col-xs-12">
 								                			<label className="history-task-detail-title" style={{display: 'inline'}}>Your sroce:</label>
 								                			<span className="history-task-detail-content">{item.rating}</span>
 								                		</li>
-								                		<li className="history-task-detail-item col-xs-6">
+								                		<li className="history-task-detail-item col-xs-12">
 								                			<label className="history-task-detail-title" style={{display: 'inline'}}>Actual Length:</label>
 								                			<span className="history-task-detail-content">{item.length}</span>
 								                		</li>
