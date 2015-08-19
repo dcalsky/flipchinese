@@ -34,9 +34,10 @@ let SignIn = React.createClass({
     if(cookie.get('user_id') && cookie.get('auth_token')){
       this.transitionTo('/main/my-pack');
     }
-    if(cookie.get('email')){
+    console.log(cookie.get('email'))
+    if(cookie.get('email_remember')){
       this.setState({
-        email: cookie.get('email'),
+        email: cookie.get('email_remember'),
       });
     }
     mixpanel.track("open", {
@@ -148,9 +149,9 @@ let SignIn = React.createClass({
         cookie.set('username', data.user.username);
         cookie.set('role',data.user.role);
         if(self.state.remember){
-          cookie.set('email',self.state.email);
+          cookie.set('email_remember',self.state.email);
         }else{
-          cookie.set('email','');
+          cookie.set('email_remember','');
         }
         self.setState({completed: true,});
         if(data.user.role.toLowerCase() == 'lp' || data.user.role.toLowerCase() == 'tutor'){

@@ -33,8 +33,8 @@ let TaskPart = React.createClass({
                     </span>
                     {this.props.part.title}
                 </h3>
-                <p style={{fontSize: '16px',textAlign: 'center'}}>
-                    <i className="zmdi zmdi-time"></i>&nbsp;Expected length:{this.props.part.length}</p>
+                <p style={{fontSize: '18px',textAlign: 'center',margin: '15px 0'}}>
+                    <i className="zmdi zmdi-time"></i>&nbsp;Expected length:{this.props.part.length} minutes</p>
                 <Paper zDepth={1} style={{marginBottom: '24px'}}>
                     <ImageBox image={this.props.part.learner_image}/>
                     <AudioPlayer audio={this.props.part.learner_audio}/>

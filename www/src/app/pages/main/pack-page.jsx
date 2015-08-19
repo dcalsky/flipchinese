@@ -108,14 +108,14 @@ let PackPage = React.createClass({
         fetcher.getPack_item(this.getQuery().pack_item, function (data) {
             self.setState({
                 taskLoadComplete: true,
-                title: data.pack_item.title,
-                intro: data.pack_item.intro,
+                title: data.pack_item.pack.title,
+                intro: data.pack_item.pack.intro,
                 materials: data.pack_item.materials,
                 tasks: data.pack_item.task_results,
                 id: data.pack_item.id,
                 materialLength: data.pack_item.materials.length,
                 taskLength: data.pack_item.length,
-                price: data.pack_item.price,
+                price: data.pack_item.pack.price,
                 packType: 'pack_item',
                 mine: true,
             });
@@ -133,10 +133,26 @@ let PackPage = React.createClass({
                     });
                 }
             });
-            fetcher.getMyPacks(cookie.get('user_id'), cookie.get('auth_token'), function(userContent){
-                let mine = !(userContent.pack_ids.indexOf(parseInt(self.getParams().id)) === -1)
+            if(cookie.get('user_id') && cookie.get('auth_token')){
+                fetcher.getMyPacks(cookie.get('user_id'), cookie.get('auth_token'), function(userContent){
+                    let mine = !(userContent.pack_ids.indexOf(parseInt(self.getParams().id)) === -1)
+                    self.setState({
+                        mine: mine,
+                        taskLoadComplete: true,
+                        title: data.pack.title,
+                        intro: data.pack.intro,
+                        materials: data.pack.materials,
+                        tasks: data.pack.tasks,
+                        id: data.pack.id,
+                        materialLength: data.pack.materials.length,
+                        taskLength: data.pack.length,
+                        price: data.pack.price,
+                        packType: 'pack_id',
+                    });
+                });
+            }else{
                 self.setState({
-                    mine: mine,
+                    mine: false,
                     taskLoadComplete: true,
                     title: data.pack.title,
                     intro: data.pack.intro,
@@ -147,8 +163,9 @@ let PackPage = React.createClass({
                     taskLength: data.pack.length,
                     price: data.pack.price,
                     packType: 'pack_id',
-                })
-            });
+                });
+            }
+
         });
     },
     back() {
