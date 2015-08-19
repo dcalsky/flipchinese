@@ -236,12 +236,12 @@ let Fast = React.createClass({
 											placeholder="Contact Phone"
 										/>
 									</li>
-									<li className="personal-info-list-item center-xs middle-xs">
+									<li className="personal-info-list-item center-xs middle-xs" style={{paddingBottom: 5, borderBottom: 'none'}}>
 										<button className="button-raised" disabled={!this.state.infoLoadCompleted} style={{backgroundColor: '#02b81b',width: '80%'}}>{this.state.infoLoadCompleted ? 'Submit' : 'Submiting...'}</button>
 									</li>
 								</ul>
 							</form>
-							<div className="center-xs" style={{margin: '5px 0 20px 0'}}>
+							<div className="center-xs" style={{marginTop: 5}}>
 								<button className="button-raised" style={{backgroundColor: '#c9394a',width: '80%'}} onClick={this._logout}>Log out</button>
 							</div>
 							{

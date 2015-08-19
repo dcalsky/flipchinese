@@ -142,8 +142,8 @@ let Login = React.createClass({
 						</div>
 						{this.getValidationMessages('verifyPassword').map(this.renderHelpText)}
 						<div className="button-group">
-							<button type="button" className="button-raised" style={{backgroundColor: '#1967d2'}} onClick={this._turnToLogin}>Return</button>
 							<button type="submit" className="button-raised" disabled={this.state.signCompleted ? false : true} style={{backgroundColor: '#ff3b77', color: '#fff'}} >{this.state.signCompleted ? 'Register' : 'Signing...'}</button>
+							<button type="button" className="button-raised" style={{backgroundColor: '#1967d2'}} onClick={this._turnToLogin}>Cancel</button>
 						</div>
 					</form>
 				</section>

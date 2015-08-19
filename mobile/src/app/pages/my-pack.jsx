@@ -56,8 +56,8 @@ let MyPack = React.createClass({
 	      }
 	    });
 	},
-	_enterPack(id){
-		this.transitionTo('/main/pack-inside/' + id);
+	_enterPack(id, pack_item){
+		this.transitionTo('/main/pack-inside/' + id, {}, {pack_item: pack_item});
 	},
 	render(){
 		let self = this;
@@ -86,7 +86,7 @@ let MyPack = React.createClass({
 					<ul className="material-list">
 						{this.state.packs.map((item)=>{
 							return(
-								<li className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterPack(item.pack.id)}}>
+								<li className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterPack(item.pack.id, item.id)}}>
 									<div className="col-xs-6">
 										<img src={item.pack.thumb} className="material-img" />
 									</div>
@@ -115,7 +115,10 @@ let MyPack = React.createClass({
 				}
 				{
 					this.state.findNothing?
-					<Error content="Find Nothing..." buttonLabel="To Buy Pack" handleBack={()=>{this.transitionTo('/main/focus')}} />
+					<div style={{marginTop: 30}}>
+						<p style={{fontSize: '1em', fontWeight: 400, color: '#1967d2', margin: '15px 15px'}}>Welcome! Find your packs and buy them on computer! Then start your learning!</p>
+						<Error  buttonLabel="Find Packs" handleBack={()=>{this.transitionTo('/main/focus')}} />
+					</div>
 					:
 					null
 				}

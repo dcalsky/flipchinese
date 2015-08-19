@@ -31,18 +31,20 @@ let Fast = React.createClass({
 		if(cookie.get('user_id') && cookie.get('auth_token')){
 			//getMypack
 		    reqwest({
-		        url: 'http://api.flipchinese.com/api/v1/users/' + user_id + '/pack_items?user_id=' + user_id + '&auth_token=' + auth_token
+		        url: 'http://api.flipchinese.com/api/v1/users/' + user_id + '/content?id=' + user_id + '&user_id=' +user_id + '&auth_token=' + auth_token
 		      , type: 'json'
 		      , method: 'get'
 		      , success(resp) {
 			      	console.log(resp)
-			      	let packIds = _.map(resp.pack_items,(item)=>{
-			      		return item.pack.id;
-			      	});
 			      	self.setState({
-			      		ableToEnter: packIds.indexOf(parseInt(id)) == -1 ? false : true,
+			      		ableToEnter: resp.pack_ids.indexOf(parseInt(id)) == -1 ? false : true,
 			      	});
-			      	self._getThisPack(id)
+			      	if(self.getQuery().pack_item){
+			      		self._getPack_item(self.getQuery().pack_item)
+			      	}else{
+						self._getPack(id)
+			      	}
+			      	
 		      }
 		      , error(err){
 		      		console.log(err);
@@ -55,10 +57,33 @@ let Fast = React.createClass({
 	      	this.setState({
 	      		ableToEnter: false
 	      	});
-			this._getThisPack(id);
+			this._getPack(id);
 		}
 	},
-	_getThisPack(id){
+	_getPack_item(id){
+		let self = this;
+	    reqwest({
+	        url: 'http://api.flipchinese.com/api/v1/users/pack_items/' + id
+	      , type: 'json'
+	      , method: 'get'
+	      , success(resp) {
+		      	console.log(resp)
+		      	self.setState({
+		      		materials: resp.pack_item.materials,
+		      		tasks: resp.pack_item.task_results,
+		      		loadCompleted: true,
+		      		pack: resp.pack_item.pack
+		      	});
+	      }
+	      , error(err){
+	      		console.log(err);
+	      		self.setState({
+	      			loadCompleted: true,
+	      		});
+	      }
+	    });
+	},
+	_getPack(id){
 		let self = this;
 	    reqwest({
 	        url: 'http://api.flipchinese.com/api/v1/packs/' + id
@@ -69,8 +94,8 @@ let Fast = React.createClass({
 		      	self.setState({
 		      		materials: resp.pack.materials,
 		      		tasks: resp.pack.tasks,
-		      		pack: resp.pack,
 		      		loadCompleted: true,
+		      		pack: resp.pack
 		      	});
 	      }
 	      , error(err){
@@ -82,18 +107,18 @@ let Fast = React.createClass({
 	    });
 	},
 	_enterMaterial(id){
-		if(this.state.ableToEnter){
+		if(this.state.ableToEnter && this.getQuery().pack_item){
 			this.transitionTo('/main/material/' + id);
 		}else{
-			alert('Please login or buy this pack...');
+			alert('Please buy this pack or go to My Pack...');
 		}
 
 	},
-	_enterTask(id){
-		if(this.state.ableToEnter){
-			this.transitionTo('/main/task/' + id);
+	_enterTask(id, result_id, fulfilled){
+		if(this.state.ableToEnter && this.getQuery().pack_item){
+			this.transitionTo('/main/task/' + id, {}, {result_id: result_id, fulfilled: fulfilled});
 		}else{
-			alert('Please log in or buy this pack...');
+			alert('Please buy this pack or go to My Pack...');
 		}
 	},
 	render(){
@@ -167,17 +192,31 @@ let Fast = React.createClass({
                             <div className="explain-content start-xs">
                                 <ul className="material-list">
 									{this.state.tasks.map((item)=>{
-										return(
-											<li key={item.id} className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterTask(item.id)}}>
-												<div className="col-xs-6">
-													<img src={item.parts[0].thumb} className="material-img" />
-												</div>
-												<div className="col-xs-6">
-													<h4 className="material-title">{item.title}</h4>
-													<p><i className="material-pin zmdi zmdi-pin"></i>{item.topic}</p>
-												</div>
-											</li>
-										);
+										if(self.getQuery().pack_item){
+											return(
+												<li key={item.id} className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterTask(item.task_id, item.id, item.fulfilled)}}>
+													<div className="col-xs-6">
+														<img src={item.task.parts[0].thumb} className="material-img" />
+													</div>
+													<div className="col-xs-6">
+														<h4 className="material-title">{item.task.title}</h4>
+														<p><i className="material-pin zmdi zmdi-pin"></i>{item.task.topic}</p>
+													</div>
+												</li>
+											);
+										}else{
+											return(
+												<li key={item.id} className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterTask(item.id)}}>
+													<div className="col-xs-6">
+														<img src={item.parts[0].thumb} className="material-img" />
+													</div>
+													<div className="col-xs-6">
+														<h4 className="material-title">{item.title}</h4>
+														<p><i className="material-pin zmdi zmdi-pin"></i>{item.topic}</p>
+													</div>
+												</li>
+											);
+										}
 									})}
                                 </ul>
                             </div>

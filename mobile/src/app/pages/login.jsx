@@ -60,7 +60,7 @@ let Login = React.createClass({
 	        }else{
 	          cookie.set('email','');
 	        }
-	        self.transitionTo('/main/account');
+	        self.transitionTo('/main/my-pack');
 	        self.setState({loginCompleted: true,});
 	      }
 	      , error(err){
@@ -113,8 +113,8 @@ let Login = React.createClass({
 						</div>
 						{this.getValidationMessages('password').map(this.renderHelpText)}
 						<div className="col-xs-12 button-group">
+							<button type="submit" className="button-raised" disabled={this.state.loginCompleted ? false : true} style={{backgroundColor: '#ff3b77', color: '#fff'}} >{this.state.loginCompleted ? 'Login' : 'Logining...'}</button>
 							<button type="button" className="button-raised" style={{backgroundColor: '#1967d2', color: '#fff'}} onClick={this._turnToSign} >Register</button>
-							<button type="submit" className="button-raised" disabled={this.state.loginCompleted ? false : true} style={{backgroundColor: '#ff3b77', color: '#fff'}} >{this.state.loginCompleted ? 'login' : 'logining...'}</button>
 						</div>
 					</form>
 				</section>
