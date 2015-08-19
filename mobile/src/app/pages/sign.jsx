@@ -11,7 +11,7 @@ let Login = React.createClass({
 	validatorTypes:  {
         username: Joi.string().required().min(4).max(14).label('Username'),
         email: Joi.string().required().email().label('Email Address'),
-        password: Joi.string().required().min(6).max(14).label('Password'),
+        password: Joi.string().required().min(8).max(14).label('Password'),
         verifyPassword: Joi.valid(Joi.ref('password')).required().label('Password Confirmation'),
 	},
 	getInitialState() {
@@ -25,7 +25,7 @@ let Login = React.createClass({
 	},
 	componentWillMount() {
 	    if(cookie.get('user_id') && cookie.get('auth_token')){
-	      this.goBack();
+	      this.transitionTo('/main/my-pack');
 	    }
 	    if(cookie.get('email')){
 	      this.setState({
@@ -35,7 +35,7 @@ let Login = React.createClass({
 	},
 	_handleRegister(e){
 		e.preventDefault();
-	    if(!this.isValid('email') || !this.isValid('username') || !this.isValid('password') || !this.isValid('verifyPassword') || !this.state.password || !this.state.email || !this.state.username || !this.state.verifyPassword){
+	    if(!this.isValid('email') || !this.isValid('username') || !this.isValid('password') || !this.isValid('verifyPassword') || !this.state.password || !this.state.email || !this.state.username || !this.state.verifyPassword || this.state.password.length < 8 || this.state.username < 6 || this.state.verifyPassword < 8){
 	      return
 	    }
 		this.setState({signCompleted: false});

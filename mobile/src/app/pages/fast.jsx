@@ -178,7 +178,7 @@ let Fast = React.createClass({
 							return(
 								<li style={{cursor: 'pointer'}} className="row middle-xs" onClick={()=>{this._enterMaterial(item.id)}}>
 									<div className="col-xs-6">
-										<img src={item.thumb} className="material-img" />
+										<img src={item.thumb + '-flipchinesesj'} className="material-img" />
 									</div>
 									<div className="col-xs-6">
 										<h4 className="material-title">{item.title}</h4>

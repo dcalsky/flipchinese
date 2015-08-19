@@ -28,7 +28,7 @@ let Fast = React.createClass({
 	getPack(id, user_id, auth_token){
 		let self = this;
 		this.setState({loadCompleted: false,});
-		if(cookie.get('user_id') && cookie.get('auth_token')){
+		if(user_id && auth_token){
 			//getMypack
 		    reqwest({
 		        url: 'http://api.flipchinese.com/api/v1/users/' + user_id + '/content?id=' + user_id + '&user_id=' +user_id + '&auth_token=' + auth_token

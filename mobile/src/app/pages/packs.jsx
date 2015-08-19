@@ -194,7 +194,7 @@ let Pack = React.createClass({
 							return(
 								<li className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterPack(item.id)}}>
 									<div className="col-xs-6">
-										<img src={item.thumb} className="material-img" />
+										<img src={item.thumb + '-flipchinesesj'} className="material-img" />
 									</div>
 									<div className="col-xs-6">
 										<h4 className="material-title">{item.title}</h4>

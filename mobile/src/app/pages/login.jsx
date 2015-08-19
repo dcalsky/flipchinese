@@ -17,15 +17,16 @@ let Login = React.createClass({
 	   		user_id: null,
 	   		password: null,
 	   		loginCompleted: true,
+	   		remember: true,
 	    };
 	},
   	componentWillMount() {
 	    if(cookie.get('user_id') && cookie.get('auth_token')){
-	      this.goBack();
+	      this.transitionTo('/main/my-pack');
 	    }
-	    if(cookie.get('email')){
+	    if(cookie.get('email_remember')){
 	      this.setState({
-	        email: cookie.get('email'),
+	        email: cookie.get('email_remember'),
 	      });
 	    }
   	},
@@ -56,9 +57,9 @@ let Login = React.createClass({
 	        cookie.set('username', resp.user.username);
 	        cookie.set('role',resp.user.role);
 	        if(self.state.remember){
-	          cookie.set('email',self.state.email);
+	          cookie.set('email_remember',self.state.email);
 	        }else{
-	          cookie.set('email','');
+	          cookie.set('email_remember','');
 	        }
 	        self.transitionTo('/main/my-pack');
 	        self.setState({loginCompleted: true,});
@@ -71,6 +72,11 @@ let Login = React.createClass({
 	},
 	_turnToSign(){
 		this.transitionTo('/main/sign');
+	},
+	_handleCheckbox(){
+		this.setState({
+			remember: !this.state.remember
+		});
 	},
 	render(){
 		return(
@@ -112,6 +118,15 @@ let Login = React.createClass({
 							/>
 						</div>
 						{this.getValidationMessages('password').map(this.renderHelpText)}
+						<div className="input-group" style={{border: 'none', display: 'block'}}>
+							<input 
+					            ref="checkbox" 
+					            type="checkbox"
+					            checked={this.state.remember}
+					            onClick={this._handleCheckbox}
+							/>
+							<span style={{paddingLeft: 5}} >Remember Me</span>
+						</div>
 						<div className="col-xs-12 button-group">
 							<button type="submit" className="button-raised" disabled={this.state.loginCompleted ? false : true} style={{backgroundColor: '#ff3b77', color: '#fff'}} >{this.state.loginCompleted ? 'Login' : 'Logining...'}</button>
 							<button type="button" className="button-raised" style={{backgroundColor: '#1967d2', color: '#fff'}} onClick={this._turnToSign} >Register</button>

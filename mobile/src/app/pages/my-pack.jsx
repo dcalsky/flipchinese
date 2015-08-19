@@ -88,7 +88,7 @@ let MyPack = React.createClass({
 							return(
 								<li className="row middle-xs" style={{cursor: 'pointer'}} onClick={()=>{this._enterPack(item.pack.id, item.id)}}>
 									<div className="col-xs-6">
-										<img src={item.pack.thumb} className="material-img" />
+										<img src={item.pack.thumb + '-flipchinesesj'} className="material-img" />
 									</div>
 									<div className="col-xs-6">
 										<h4 className="material-title">{item.pack.title}</h4>
