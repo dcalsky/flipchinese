@@ -35,7 +35,7 @@ let Content = React.createClass({
   },
   render() {
     let abled = false ;
-    let image = this.props.type == 'task' ? this.props.item.parts[0].thumb : this.props.item.thumb;
+    let image = this.props.type == 'task' ? this.props.item.parts == [] ? this.props.item.parts[0].thumb : '' : this.props.item.thumb;
     if(this.props.item.isMine || this.props.free){
       abled = true ;
     }

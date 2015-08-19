@@ -7,7 +7,7 @@ let React = require('react/addons');
 let Router = require('react-router');
 
 let mui = require('material-ui');
-let { FontIcon, RaisedButton, Checkbox, FlatButton, Snackbar} = mui;
+let { Dialog, FontIcon, RaisedButton, Checkbox, FlatButton, Snackbar} = mui;
 let {Colors} = mui.Styles;
 
 let _ = require('underscore');
@@ -179,6 +179,7 @@ let PackPage = React.createClass({
           'where': "pack inside",
           'id': this.state.id,
         });
+        this.refs.customDialog.show();
         this.cart_string.push({
           id: this.state.id,
           title: this.state.title,
@@ -207,9 +208,25 @@ let PackPage = React.createClass({
             });
         }
     },
+    _handleCustomDialogGo(){
+        this.transitionTo('/main/cart');
+    },
+    _handleCustomDialogCancel() {
+        this.refs.customDialog.dismiss();
+    },
     render() {
         let self = this;
         if (this.state.taskLoadComplete) {
+          let customActions = [
+            <FlatButton
+              label="Continue"
+              secondary={true}
+              onTouchTap={this._handleCustomDialogCancel} />,
+            <FlatButton
+              label="Go to shopping cart"
+              primary={true}
+              onTouchTap={this._handleCustomDialogGo} />
+          ];
             return (
                 <div>
                     <div style={{display: this.state.taskLoadComplete ? 'block' : 'none'}}>
@@ -296,7 +313,17 @@ let PackPage = React.createClass({
                         <Snackbar
                             ref="snackbar"
                             message="You have completed this pack!"
-                            onActionTouchTap={this._handleAction}/>
+                            onActionTouchTap={this._handleAction}
+                        />
+                      <Dialog
+                        ref="customDialog"
+                        title="The pack is added to the shopping cart successfully!"
+                        actions={customActions}
+                        modal={false}>
+                        <img style={{position: 'absolute',right: 50, top: 20, hegiht: 50 ,width: 50}} src="images/correct.png" />
+
+                        <p style={{fontSize: 16,}}> Continue selecting packs, or go to shopping cart and pay.</p>
+                      </Dialog>
                     </div>
                 </div>
             );
