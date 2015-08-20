@@ -1,0 +1,38 @@
+.editor {
+	line-height: 1.2;
+	h1 {
+		color: #ff3b77;
+		font-size: 2.3em;
+		font-weight: 1000 !important;
+	}
+	h2 {
+		color: darken(#CCCCCC, 90%);
+		font-size: 1.9em;
+		font-weight: 900 !important;
+	}
+	h3 {
+		color: darken(#CCCCCC, 90%);
+		font-size: 1.5em;
+		font-weight: 800 !important;
+	}
+	h4 {
+		color: #1967d2;
+		font-size: 1.2em;
+		font-weight: 700 !important;
+	}
+	h5 {
+		color: darken(#CCCCCC, 90%);
+		font-size: 1em;
+		font-weight: 600 !important;
+	}
+	p {
+		font-size: 1em;
+	}
+	strong {
+		font-weight: 1100 !important;
+	}
+	del {
+		padding-left: 45px;
+	    text-decoration: none;
+	}
+}

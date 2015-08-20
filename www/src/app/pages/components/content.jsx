@@ -3,9 +3,6 @@
 let React = require('react/addons');
 let Router = require('react-router');
 
-let mui = require('material-ui');
-let { RaisedButton} = mui;
-
 let MainStyle = require('../styles/main-style.jsx');
 
 let styles = {
@@ -29,14 +26,14 @@ let Content = React.createClass({
         mixpanel.track("enter "+this.props.type);
     if(this.props.type == 'task' && this.props.result_id){
       this.transitionTo('/main/' + this.props.type + '/' + this.props.item.id, {}, {result_id: this.props.result_id, fulfilled: this.props.fulfilled});
-    }else{
-      this.transitionTo('/main/' + this.props.type + '/' + this.props.item.id);
+    }else if(this.props.type == 'material'){
+      this.transitionTo('/' + this.props.type + '/' + this.props.item.id);
     }
   },
   render() {
     let abled = false ;
-    let image = this.props.type == 'task' ? this.props.item.parts == [] ? this.props.item.parts[0].thumb : '' : this.props.item.thumb;
-    if(this.props.item.isMine || this.props.free){
+    let image = this.props.type == 'task' ? this.props.item.parts == [] ? '' : this.props.item.parts[0].thumb : this.props.item.thumb;
+    if(this.props.ableToEnter){
       abled = true ;
     }
     return (
@@ -66,14 +63,20 @@ let Content = React.createClass({
           :
           null
         }
-        <div className="content-intro start-xs">
+        <div className="content-intro start-xs" style={{borderBottom: abled ? 'border-bottom: 1px solid #E5E5E5' : 'none'}}>
           <p>
             {this.props.item.intro}
           </p>
           </div>
-        <div className="content-button center-xs">
-          <RaisedButton primary={true} label={this.props.buttonLabel ? this.props.buttonLabel : 'Learn'} disabled={!abled} onClick={this.enterContent} />
-        </div>
+          {
+            abled?
+            <div className="content-button center-xs">
+              <button className="button-normal" style={{backgroundColor: '#ff3b77', borderRadius: 0}} onClick={this.enterContent} >{this.props.buttonLabel ? this.props.buttonLabel : 'Learn'}</button>
+            </div>
+            :
+            null
+          }
+
       </li>
     );
   }

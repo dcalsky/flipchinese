@@ -5,7 +5,8 @@
 @import "home.css";
 @import "left-nav.css";
 @import "content.css";
-@import "tab.css";
+@import "tabs.css";
+@import 'editor.css';
 /* flexbox grid */
 @import "flexboxgrid.min.css";
 

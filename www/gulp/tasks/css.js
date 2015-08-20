@@ -38,6 +38,7 @@ gulp.task('scss', shell.task([
   'scss --sourcemap=none -t=compressed src/css/home.scss:build/web/home.css',
   'scss --sourcemap=none -t=compressed src/css/left-nav.scss:build/web/left-nav.css',
   'scss --sourcemap=none -t=compressed src/css/content.scss:build/web/content.css',
-  'scss --sourcemap=none -t=compressed src/css/tab.scss:build/web/tab.css'
+  'scss --sourcemap=none -t=compressed src/css/editor.scss:build/web/editor.css',
+  'scss --sourcemap=none -t=compressed src/css/tabs.scss:build/web/tabs.css',
 ]))
 

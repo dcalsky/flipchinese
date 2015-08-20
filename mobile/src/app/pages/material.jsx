@@ -7,6 +7,24 @@ let reqwest = require('reqwest');
 let cookie = require('cookie-cutter');
 let _ = require('underscore');
 
+let isEmpty = (obj)=>{
+    if(obj instanceof Array){
+        return obj.length && obj.length == 0;
+    }else if(obj instanceof Object){
+        let key;
+        for(key in obj){
+            return false;
+        }
+        return true;
+    }else{
+        if(obj){
+            return false;
+        }else{
+            return true;
+        }
+    }
+};
+
 let Material = React.createClass({
 	mixins: [Router.Navigation, Router.State,],
 	getInitialState() {
@@ -96,7 +114,7 @@ let Material = React.createClass({
 	                            <video id="video-obj" width="100%" controls="controls" src={this.state.media.video}/>
 	                        </div> ;
 
-	        let wordMeal = <div className="col-xs-12"><div dangerouslySetInnerHTML={{__html: this.state.media.text}} /></div> ;
+	        let wordMeal = <div className="col-xs-12"><div className="editor" dangerouslySetInnerHTML={{__html: this.state.media.text}} /></div> ;
 
 	        let audioMeal = <div className="col-xs-12">
 	                            <audio style={{width: '100%',maxWidth:'560px'}} controls="controls">
@@ -109,8 +127,8 @@ let Material = React.createClass({
 	                      </div>;
 
             let mediaMeal = this.state.media.video ? videoMeal : this.state.media.video ? videoMeal : this.state.media.pdf ? pdfMeal : this.state.media.audio ? audioMeal : this.state.media.text ? wordMeal : this.state.media.image ? <img src={this.state.media.image} style={styles.image} /> : this.state.media.thumb ? <img src={this.state.media.thumb} style={styles.thumb} /> : null  ;
-	        let hanziMeal = <div className="hanziMeal" dangerouslySetInnerHTML={{__html: this._combineText(this.state.scripts.pinyin, this.state.scripts.hanzi,'\r')}} />;
-	        let translationMeal = <div className="hanziMeal" dangerouslySetInnerHTML={{__html: this._filterText(this.state.scripts.translation)}} />;
+	        let hanziMeal = <div className="hanziMeal editor" dangerouslySetInnerHTML={{__html: this._combineText(this.state.scripts.pinyin, this.state.scripts.hanzi,'\r')}} />;
+	        let translationMeal = <div className="hanziMeal editor" dangerouslySetInnerHTML={{__html: this._filterText(this.state.scripts.translation)}} />;
 			return(
 				<div className="main">
 					<section className="appbar">
@@ -159,7 +177,7 @@ let Material = React.createClass({
 	                    </div>
 	                }
                     {
-                        this.state.kp.grammar || this.state.kp.voc || this.state.kp.character?
+                        !isEmpty(this.state.kp.grammar) || !isEmpty(this.state.kp.voc) || !isEmpty(this.state.kp.character) ?
                         <div>
                             <Tabs>
                                 <tab title="Grammar" >
@@ -183,7 +201,7 @@ let Material = React.createClass({
                                 <p className="middle-xs">Explain</p>
                             </div>
                             <div className="explain-content start-xs">
-                                <div className="explain-content-text" dangerouslySetInnerHTML={{__html: this.state.explain}} />
+                                <div className="explain-content-text editor" dangerouslySetInnerHTML={{__html: this.state.explain}} />
                             </div>
                         </div>
                         :

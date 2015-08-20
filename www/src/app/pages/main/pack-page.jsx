@@ -23,6 +23,7 @@ let fetcher = {
         fetch('http://api.flipchinese.com/api/v1/users/pack_items/' + id)
             .then(checkStatus)
             .then(function (data) {
+                console.log(data)
                 callback(data)
             }).catch(function (error) {
                 console.log(error)
@@ -88,24 +89,37 @@ let PackPage = React.createClass({
             price: 0,
             ableToCart: true,
             addButtonLabel: 'Add To Cart',
-            mine: false,
+            ableToEnter: false,
         };
     },
     componentWillMount() {
         mixpanel.track("open", {
           'where': "pack inside",
         });
-        if(this.getQuery().pack_item){
-            this.getPack_item()
+        if(cookie.get('user_id') && cookie.get('auth_token')){
+            this.getMyPacks(this.getParams().id, cookie.get('user_id'), cookie.get('auth_token'));
         }else{
-            this.getPack()
+            this.setState({ableToEnter: false})
         }
         
     },
-    getPack_item(){
+    getMyPacks(id, user_id, auth_token){
+        let self = this;
+        fetcher.getMyPacks(user_id, auth_token, function(data){
+            self.setState({
+                ableToEnter: data.pack_ids.indexOf(parseInt(id)) == -1 ? false : true,
+            });
+            if(self.getQuery().pack_item){
+                self.getPack_item(self.getQuery().pack_item)
+            }else{
+                self.getPack(id)
+            }
+        });
+    },
+    getPack_item(pack_item_id){
         let self = this;
         this.cart_string = JSON.parse(storage.get('cart')) || [];
-        fetcher.getPack_item(this.getQuery().pack_item, function (data) {
+        fetcher.getPack_item(pack_item_id, function (data) {
             self.setState({
                 taskLoadComplete: true,
                 title: data.pack_item.pack.title,
@@ -116,15 +130,16 @@ let PackPage = React.createClass({
                 materialLength: data.pack_item.materials.length,
                 taskLength: data.pack_item.length,
                 price: data.pack_item.pack.price,
-                packType: 'pack_item',
-                mine: true,
+                isMine: true,
+                isDone: data.pack_item.done,
+                ableToEnter: true,
             });
         });
     },
-    getPack(){
+    getPack(pack_id){
         let self = this;
         this.cart_string = JSON.parse(storage.get('cart')) || [];
-        fetcher.getPack(this.getParams().id, function (data) {
+        fetcher.getPack(pack_id, function (data) {
             _.map(self.cart_string,function(pack_string){
                 if(pack_string.id == data.pack.id){
                     self.setState({
@@ -133,38 +148,20 @@ let PackPage = React.createClass({
                     });
                 }
             });
-            if(cookie.get('user_id') && cookie.get('auth_token')){
-                fetcher.getMyPacks(cookie.get('user_id'), cookie.get('auth_token'), function(userContent){
-                    let mine = !(userContent.pack_ids.indexOf(parseInt(self.getParams().id)) === -1)
-                    self.setState({
-                        mine: mine,
-                        taskLoadComplete: true,
-                        title: data.pack.title,
-                        intro: data.pack.intro,
-                        materials: data.pack.materials,
-                        tasks: data.pack.tasks,
-                        id: data.pack.id,
-                        materialLength: data.pack.materials.length,
-                        taskLength: data.pack.length,
-                        price: data.pack.price,
-                        packType: 'pack_id',
-                    });
-                });
-            }else{
-                self.setState({
-                    mine: false,
-                    taskLoadComplete: true,
-                    title: data.pack.title,
-                    intro: data.pack.intro,
-                    materials: data.pack.materials,
-                    tasks: data.pack.tasks,
-                    id: data.pack.id,
-                    materialLength: data.pack.materials.length,
-                    taskLength: data.pack.length,
-                    price: data.pack.price,
-                    packType: 'pack_id',
-                });
-            }
+            self.setState({
+                taskLoadComplete: true,
+                title: data.pack.title,
+                intro: data.pack.intro,
+                materials: data.pack.materials,
+                tasks: data.pack.tasks,
+                id: data.pack.id,
+                materialLength: data.pack.materials.length,
+                taskLength: data.pack.length,
+                price: data.pack.price,
+                ableToEnter: false,
+                isMine: false,
+            });
+            
 
         });
     },
@@ -203,8 +200,9 @@ let PackPage = React.createClass({
         let self = this;
         if (!this.state.isDone) {
             fetcher.done(this.getParams().id, cookie.get('user_id'), cookie.get('auth_token'), function (data) {
-                if (data.result == 'ok')
+                if (data.result == 'ok'){
                     self.refs.checkbox.setChecked(true);
+                }
             });
         }
     },
@@ -251,7 +249,7 @@ let PackPage = React.createClass({
                                 <div className="card">
                                     <ul className="content-list row center-xs">
                                         {this.state.materials.map(function (item) {
-                                            return <Content key={item.id} item={item} type="material" free={self.state.mine}/>
+                                            return <Content key={item.id} item={item} type="material" ableToEnter={self.state.ableToEnter} />
                                         })}
                                     </ul>
                                 </div>
@@ -267,10 +265,10 @@ let PackPage = React.createClass({
                                 <div className="card">
                                     <ul  className="content-list row center-xs">
                                         {self.state.tasks.map(function (item) {
-                                            if(self.state.packType == 'pack_item'){
-                                                return <Content key={item.id} item={item.task} result_id={item.id} fulfilled={item.fulfilled} type="task" free={self.state.mine} />
+                                            if(self.state.ableToEnter){
+                                                return <Content key={item.id} item={item.task} result_id={item.id} fulfilled={item.fulfilled} type="task" ableToEnter={self.state.ableToEnter} />
                                             }else{
-                                                return <Content key={item.id} item={item} type="task" buttonLabel="Go to My Pack" />
+                                                return <Content key={item.id} item={item} type="task" ableToEnter={self.state.ableToEnter} />
                                             }
                                         })}
                                     </ul>

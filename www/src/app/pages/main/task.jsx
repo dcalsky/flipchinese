@@ -22,6 +22,7 @@ let fetcher = {
             .then(function (data) {
                 callback(data)
             }).catch(function (error) {
+                console.log(error)
                 window.location.href = '#/main/connect-error';
             });
     },
@@ -66,6 +67,7 @@ let Task = React.createClass({
             findNothing: false,
             title: null,
             parts: [],
+            isSelfTask: false,
             learner_on_task: null,
             learner_on_tutor: null,
             startTime: new Date()
@@ -81,23 +83,14 @@ let Task = React.createClass({
         this.loadInit();
     },
     loadInit() {
-        this.setState({
-            taskLoadComplete: false,
-            isDone: false,
-            findNothing: false,
-            title: null,
-            parts: [],
-            learner_on_task: null,
-            learner_on_tutor: null,
-            startTime: new Date()
-        });
-        var self = this;
+        let self = this;
         fetcher.get(self.getParams().id, function (data) {
             self.setState({
                 taskLoadComplete: true,
                 title: data.task.title,
                 parts: data.task.parts,
                 isDone: self.getQuery().fulfilled == 'true' ? true : false,
+                isSelfTask: data.task.parts[0].kind === 'self' ? true : false,
             });
         });
     },
@@ -181,18 +174,23 @@ let Task = React.createClass({
                                     <TextField
                                         floatingLabelText="On Task"
                                         ref="onTask"
-                                        valueLink={this.linkState('onTask')}
+                                        valueLink={this.linkState('learner_on_task')}
                                         style={MainStyle.textField}
                                     />
                                 </div>
-                                <div>
-                                    <TextField
-                                        floatingLabelText="On Tutor/LP"
-                                        ref="onTutor"
-                                        valueLink={this.linkState('onTutor')}
-                                        style={MainStyle.textField}
-                                    />
-                                </div>
+                                {
+                                    this.state.isSelfTask?
+                                    null
+                                    :
+                                    <div>
+                                        <TextField
+                                            floatingLabelText="On Tutor/LP"
+                                            ref="onTutor"
+                                            valueLink={this.linkState('learner_on_tutor')}
+                                            style={MainStyle.textField}
+                                        />
+                                    </div>
+                                }
                             </Dialog>
                         </div>
                 }

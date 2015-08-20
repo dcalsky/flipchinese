@@ -6,7 +6,7 @@ let React = require('react/addons');
 let Router = require('react-router');
 
 let mui = require('material-ui');
-let {  TextField,Dialog, RaisedButton,FlatButton } = mui;
+let {  TextField, Dialog, FlatButton } = mui;
 let _ = require('underscore');
 
 let Select = require('react-select');
@@ -89,7 +89,7 @@ let HistoryTaskContent = React.createClass({
                 <div style={styles.goods} className="col-xs-2">{String(startTime.getMonth() + 1) + '.' + startTime.getDate()}</div>
                 <div style={styles.goods} className="col-xs-2">{startTime.getHours() + ':' + startTime.getMinutes()}</div>
                 <div style={styles.title} className="col-xs-5">{item.task_title}</div>
-                <div style={styles.goods} className="col-xs-3"><RaisedButton style={{width: '100%'}} onClick={this.showDetail} label="Detail" /></div>
+                <div style={styles.goods} className="col-xs-3"><button className="button-flat" style={{width: '100%'}} onClick={this.showDetail}>Detail</button></div>
                 <Dialog
                   ref="customDialog"
                   title="Your detail about this task"

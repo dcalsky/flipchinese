@@ -181,7 +181,7 @@ let Content = React.createClass({
           </div>
           <div style={styles.buttonGroup} className="col-md-4 col-sm-12 col-xs-12">
             <RaisedButton type="button" style={styles.buttonNormal} label="bought" disabled="true" />
-            <RaisedButton type="button" style={styles.buttonNormal} label="View" onClick={this.view}  />
+            <button type="button" className="button-flat-normal" style={styles.buttonNormal} onClick={this.view}>View</button>
           </div>
         </div>
       )
@@ -216,8 +216,7 @@ let Content = React.createClass({
             <RaisedButton type="button" style={styles.buttonNormal} primary={true} label={this.state.buttonLabel}  labelStyle={styles.buttonLabel} onClick={this.addToCart} disabled={this.state.disable} >
               <FontIcon style={styles.buttonIcon} className="zmdi zmdi-shopping-cart-plus"/>
             </RaisedButton>
-            <RaisedButton style={styles.buttonNormal} type="button" label="View" onClick={this.view}  />
-          </div>
+            <button type="button" className="button-flat-normal" style={styles.buttonNormal} onClick={this.view}>View</button>          </div>
           <Dialog
             ref="customDialog"
             title="The pack is added to the shopping cart successfully!"

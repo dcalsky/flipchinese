@@ -4,16 +4,31 @@ let cookie = require('cookie-cutter');
 let React = require('react/addons');
 let Router = require('react-router');
 
-let mui = require('material-ui');
-let {  RaisedButton, Tabs, Tab, Paper } = mui;
 let _ = require('underscore');
 
 let Error = require('../components/error.jsx');
 let MainStyle = require('../styles/main-style.jsx');
 let Progress = require('../components/progress.jsx');
+let Tabs = require('../components/tabs.jsx');
 
 let checkStatus = require('../../utils/check-status.js');
-
+let isEmpty = (obj)=>{
+        if(obj instanceof Array){
+            return obj.length && obj.length == 0
+        }else if(obj instanceof Object){
+            let key;
+            for(key in obj){
+                return false;
+            }
+            return true;
+        }else{
+            if(obj){
+                return false;
+            }else{
+                return true;
+            }
+        }
+};
 let styles = {
     title: {
         paddingBottom: 30,
@@ -69,6 +84,16 @@ let styles = {
     },
     explainContent: {
         padding: 25,
+    },
+    kpList: {
+        listStyle: 'none',
+        padding: 10,
+        lineHeight: '2',
+        boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
+    },
+    kpItem: {
+        fontSize: '1.5em',
+        fontWeight: 400,
     }
 }
 
@@ -194,13 +219,11 @@ let Material = React.createClass({
         if(this.state.findNothing){
             return  <Error show={true} desc="Find Nothing ..."/> ;
         }else if(this.state.materialLoadCompleted){
-
-
             let videoMeal = <div style={styles.videoMeal}>
                                 <video id="video-obj" width="100%" controls="controls" src={this.state.media.video}/>
                             </div> ;
 
-            let wordMeal = <div style={styles.wordMeal}><div dangerouslySetInnerHTML={{__html: this.state.media.text}} /></div> ;
+            let wordMeal = <div className="editor" style={styles.wordMeal}><div dangerouslySetInnerHTML={{__html: this.state.media.text}} /></div> ;
 
             let audioMeal = <div style={styles.audioMeal}>
                                 <audio style={{width: '100%',maxWidth:'560px'}} controls="controls">
@@ -209,87 +232,122 @@ let Material = React.createClass({
                                 {this.state.scripts.text ? wordMeal : this.state.media.image ? <img src={this.state.media.image} style={styles.image} /> : <img src={this.state.media.thumb} style={styles.thumb} /> }
                             </div> ; 
             let pdfMeal = <div style={styles.pdfMeal}>
-                            <RaisedButton 
-                                linkButton={true} 
-                                href={this.props.pdf} 
-                                secondary={true}
-                                label="Download PDF"
-                            />
+                            <button className="button-raised">
+                                <a href={this.props.pdf}>Download PDF</a>
+                            </button>
                            </div>;
 
-            let mediaMeal = this.state.media.video ? videoMeal : this.state.media.video ? videoMeal : this.state.media.pdf ? pdfMeal : this.state.media.audio ? audioMeal : this.state.media.text ? wordMeal : this.state.media.image ? <img src={this.state.media.image} style={styles.image} /> : this.state.media.thumb ? <img src={this.state.media.thumb} style={styles.thumb} /> : <Error show={true} desc="Find Nothing ..."/>  ;
-            let hanziMeal = <div style={styles.hanziMeal} dangerouslySetInnerHTML={{__html: this._combineText(this.state.scripts.pinyin, this.state.scripts.hanzi,'\r')}} />;
-            let translationMeal = <div style={styles.hanziMeal} dangerouslySetInnerHTML={{__html: this._filterText(this.state.scripts.translation)}} />;
+            let mediaMeal = this.state.media.video ? videoMeal :
+                this.state.media.video ? videoMeal :
+                this.state.media.pdf ? pdfMeal : 
+                this.state.media.audio ? audioMeal : 
+                this.state.media.text ? wordMeal : 
+                this.state.media.image ? <img src={this.state.media.image} style={styles.image} /> : 
+                this.state.media.thumb ? <img src={this.state.media.thumb} style={styles.thumb} /> : 
+                <Error show={true} desc="Find Nothing ..."/>
+            ;
+            let hanziMeal = <div className="editor" style={styles.hanziMeal} dangerouslySetInnerHTML={{__html: this._combineText(this.state.scripts.pinyin, this.state.scripts.hanzi,'\r')}} />;
+            let translationMeal = <div className="editor" style={styles.hanziMeal} dangerouslySetInnerHTML={{__html: this._filterText(this.state.scripts.translation)}} />;
 
             return (
-                <div className="row center-xs">
-            <div className="start-xs" style={{width: '100%'}}>
-                <div style={styles.title}>
-                    <h2 style={MainStyle.headline}>{this.state.title}</h2>
-                    <p style={styles.subTitle}>{this.state.intro}</p>
-                </div>
-               
-                {
-                    this.state.scripts.hanzi && this.state.scripts.pinyin && this.state.scripts.translation ?
-                     <div className="row" style={styles.content}>
-                        <div style={styles.mediaBox} className="col-xs-12 col-sm-12 col-md-7">
-                            {mediaMeal}
+                <div className="main row center-xs">
+                    <div className="col-xs-8" style={{width: '100%'}}>
+                        <div style={styles.title}>
+                            <h2 style={MainStyle.headline}>{this.state.title}</h2>
+                            <p style={styles.subTitle}>{this.state.intro}</p>
                         </div>
-                        <div className="col-xs-12 col-sm-12 col-md-5">
-                            <Tabs>
-                                <Tab label="hanzi & pinyin" >
-                                    {hanziMeal}
-                                </Tab>
-                                <Tab label="translation" >
-                                    {translationMeal}
-                                </Tab>
-                            </Tabs>
-                        </div>
-                    </div>
-                    :
-                     <div  style={styles.content}>
-                        <div style={styles.mediaBox}>
-                            {mediaMeal}
-                        </div>
-                    </div>
-                }
+                       
+                        {
+                            this.state.scripts.hanzi && this.state.scripts.pinyin && this.state.scripts.translation ?
+                             <div className="row" style={styles.content}>
+                                <div style={styles.mediaBox} className="col-xs-12 col-sm-12 col-md-7">
+                                    {mediaMeal}
+                                </div>
+                                <div className="col-xs-12 col-sm-12 col-md-5">
+                                    <Tabs>
+                                        <tab title="hanzi & pinyin" >
+                                            {hanziMeal}
+                                        </tab>
+                                        <tab title="translation" >
+                                            {translationMeal}
+                                        </tab>
+                                    </Tabs>
+                                </div>
+                            </div>
+                            :
+                             <div  style={styles.content}>
+                                <div style={styles.mediaBox}>
+                                    {mediaMeal}
+                                </div>
+                            </div>
+                        }
 
-                <div style={styles.footer}>
-                    {
-                        this.state.kp.grammar == [] && this.state.kp.voc == [] && this.state.kp.character == [] ?
-                        <div>
-                            <Tabs>
-                                <Tab label="Grammar" >
-                                    
-                                </Tab>
-                                <Tab label="Voc" >
-                                    
-                                </Tab>
-                                <Tab label="Character" >
-                                    
-                                </Tab>
-                            </Tabs>
+                        <div style={styles.footer}>
+                            {
+                                !isEmpty(this.state.kp.grammar) || !isEmpty(this.state.kp.voc) ||  !isEmpty(this.state.kp.character)  ?
+                                <div>
+                                    <Tabs>
+                                        <tab title="Vocabulary" >
+                                            <ul style={styles.kpList}>
+                                                {
+                                                    _.map(this.state.kp.voc,(item, key)=>{
+                                                        if(key){
+                                                            return(
+                                                                <li style={styles.kpItem}><b style={{color: '#1967d2'}}>{key}</b>{!isEmpty(item) && item.hasOwnProperty('intro') ? `    (intro: ${item.intro} )` : ''}</li>
+                                                            )
+                                                        }
+                                                    })
+                                                }
+                                            </ul>
+                                        </tab>
+                                        <tab title="Grammar" >
+                                            <ul style={styles.kpList}>
+                                                {
+                                                    _.map(this.state.kp.grammar,(item, key)=>{
+                                                        if(key){
+                                                            return(
+                                                                <li style={styles.kpItem}><b style={{color: '#1967d2'}}>{key}</b>{!isEmpty(item) && item.hasOwnProperty('intro') ? `     (intro: ${item.intro} )` : ''}</li>
+                                                            )
+                                                        }
+                                                    })
+                                                }
+                                            </ul>
+                                        </tab>
+                                        <tab title="Character" >
+                                            <ul style={styles.kpList}>
+                                                {
+                                                    _.map(this.state.kp.character,(item, key)=>{
+                                                        if(key){
+                                                            return(
+                                                                <li style={styles.kpItem}><b style={{color: '#1967d2'}}>{key}</b>{!isEmpty(item) && item.hasOwnProperty('intro') ? `      (intro: ${item.intro} )` : ''}</li>
+                                                            )
+                                                        }
+                                                    })
+                                                }
+                                            </ul>
+                                        </tab>
+                                    </Tabs>
+                                </div>
+                                :
+                                null
+                            }
+                            {
+                                this.state.explain?
+                                <div style={styles.explain}>
+                                    <div style={styles.explainHeader} className="center-xs">
+                                        <p className="middle-xs">Explain</p>
+                                    </div>
+                                    <div style={styles.explainContent} className="start-xs">
+                                        <div className="editor" style={{fontFamily: "'Helvetica', 'Arial', sans-serif"}} dangerouslySetInnerHTML={{__html: this.state.explain}} />
+                                    </div>
+                                </div>
+                                :
+                                null
+                            }
                         </div>
-                        :
-                        null
-                    }
-                    {
-                        this.state.explain?
-                        <div style={styles.explain}>
-                            <div style={styles.explainHeader} className="center-xs">
-                                <p className="middle-xs">Explain</p>
-                            </div>
-                            <div style={styles.explainContent} className="start-xs">
-                                <div style={{fontFamily: "'Helvetica', 'Arial', sans-serif"}} dangerouslySetInnerHTML={{__html: this.state.explain}} />
-                            </div>
-                        </div>
-                        :
-                        null
-                    }
+                        <button className="button-normal" style={{width: '100%', backgroundColor: '#1967d2'}} onClick={this._back} >{'< Back'}</button>
+                    </div>
                 </div>
-                <RaisedButton style={{width: '100%'}} secondary={true} label="< Back" onClick={this._back} />
-            </div>
-            </div>
             );
         }else{
             return <Progress completed={this.state.materialLoadCompleted}/>

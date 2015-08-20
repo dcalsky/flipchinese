@@ -107,7 +107,7 @@ let Content = React.createClass({
       'where': "my pack",
       'id': this.props.item.pack_id,
     });
-    this.transitionTo('/main/packs/' + this.props.item.id, {}, {pack_item: this.props.item.id}); 
+    this.transitionTo('/main/packs/' + this.props.item.pack_id, {}, {pack_item: this.props.item.id}); 
   }, 
   render() {
     return (

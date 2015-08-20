@@ -13,7 +13,8 @@ let Task = React.createClass({
 	getInitialState() {
 	    return {
             task: null,
-            start_time: new Date()
+            start_time: new Date(),
+            isSelfTask: false,
 	    };
 	},
 	componentWillMount() {
@@ -30,6 +31,7 @@ let Task = React.createClass({
                     task: resp.task,
                     loadCompleted: true,
                     done: self.getQuery().fulfilled == 'true' ? true : false,
+                    isSelfTask: resp.task.parts[0].self == 'self' ? true : false,
                 });
                 self.taskResultId = self.getQuery().result_id;
 	      }
@@ -179,16 +181,21 @@ let Task = React.createClass({
                                     onChange={(e)=>{this._handleInputChange('learner_on_task', e)}}
                                 />
                             </li>
-                            <li className="personal-info-list-item row middle-xs" style={{padding: 10}}>
-                                <label className="personal-info-list-item-title col-xs-12">On Tutor/LP:</label>
-                                <input
-                                    type="text"
-                                    className="col-xs-12"
-                                    disabled={this.state.done}
-                                    value={this.state.learner_on_tutor}
-                                    onChange={(e)=>{this._handleInputChange('learner_on_tutor', e)}}
-                                />
-                            </li>
+                            {
+                                this.state.isSelfTask ?
+                                null
+                                :
+                                <li className="personal-info-list-item row middle-xs" style={{padding: 10}}>
+                                    <label className="personal-info-list-item-title col-xs-12">On Tutor/LP:</label>
+                                    <input
+                                        type="text"
+                                        className="col-xs-12"
+                                        disabled={this.state.done}
+                                        value={this.state.learner_on_tutor}
+                                        onChange={(e)=>{this._handleInputChange('learner_on_tutor', e)}}
+                                    />
+                                </li>
+                            }
                         </ul>
                         </section>
                         :
