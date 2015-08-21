@@ -48,11 +48,11 @@ gulp.task('browserify', ['jshint'], function(callback) {
         // stream gulp compatible. Specifiy the
         // desired output filename here.
         .pipe(source(bundleConfig.outputName))
-        .pipe(buffer())
+        //.pipe(buffer())
         // Create independent source map file in the build directory
         //.pipe(sourcemaps.init({loadMaps: true}))
         //.pipe(sourcemaps.write('./'))
-        .pipe(uglify())
+        //.pipe(uglify())
         // Specify the output destination
         .pipe(gulp.dest(bundleConfig.dest))
         .on('end', reportFinished);

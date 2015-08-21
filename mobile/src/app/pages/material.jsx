@@ -133,10 +133,10 @@ let Material = React.createClass({
 				<div className="main">
 					<section className="appbar">
 						<ul className="appbar-list row middle-xs">
-							<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
+							<li className="appbar-icon col-xs-1 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 								<i className="zmdi zmdi-chevron-left"></i>
 							</li>
-							<li className="appbar-title col-xs-9 row center-xs">
+							<li className="appbar-title col-xs-10 row center-xs">
 								<h4>{this.state.title ? this.state.title : 'Material'}</h4>
 							</li>
                             <li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
@@ -215,10 +215,10 @@ let Material = React.createClass({
 				<div className="material">
 					<section className="appbar">
 						<ul className="appbar-list row">
-							<li className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
+							<li className="appbar-icon col-xs-1 start-xs" onClick={()=>{this.goBack()}}>
 								<i className="zmdi zmdi-chevron-left"></i>
 							</li>
-							<li className="appbar-title col-xs-9 row center-xs middle-xs">
+							<li className="appbar-title col-xs-10 row center-xs middle-xs">
 								<h4>Material</h4>
 							</li>
 							<li className="col-xs-1 end-xs"></li>

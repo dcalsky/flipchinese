@@ -160,10 +160,10 @@ let Fast = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list middle-xs row">
-						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-1 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
+						<li className="appbar-title col-xs-10 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
 							<h4>Account</h4>
 						</li>
 					</ul>

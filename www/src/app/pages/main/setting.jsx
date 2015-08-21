@@ -6,7 +6,8 @@ let React = require('react/addons') ;
 let Router = require('react-router') ;
 
 let mui = require('material-ui') ;
-let { Tabs, Tab, RaisedButton, TextField } = mui ;
+let { TextField } = mui ;
+let Tabs = require('../components/tabs.jsx');
 let Select = require('react-select');
 let History = require('../components/my-history.jsx');
 let Order = require('../components/order.jsx');
@@ -18,7 +19,6 @@ let Joi = require('joi');
 
 let checkStatus = require('../../utils/check-status.js');
 
-let {Typography,Colors} = mui.Styles  ;
 
 let styles = {
   label: {
@@ -252,13 +252,13 @@ let Profile = React.createClass({
         <div>
           <h2 style={MainStyle.headline}>Account</h2>
           <Tabs  initialSelectedIndex={this.initialSelectedIndex} onChange={this._tabChange}>
-            <Tab label="My Order">
+            <tab title="My Order">
               <Order />
-            </Tab>
-            <Tab label="History Task">
+            </tab>
+            <tab label="History Task">
               <History />
-            </Tab>
-            <Tab label='Personal Info'>
+            </tab>
+            <tab label='Personal Info'>
               <form style={styles.infoBox} onSubmit={this._handleInfoSubmit}>
                 <label style={styles.label}>Location</label>
 
@@ -366,14 +366,14 @@ let Profile = React.createClass({
                   {this.getValidationMessages('contact_other').map(this.renderHelpText)}  
                 </div>    
                 <div style={styles.submitButton}>
-                  <RaisedButton type="submit" style={{width: "100%"}} disabled={!this.state.loadCompleted} primary={true} label="Change" />
+                  <button className="button-normal" type="submit" style={{width: "100%", backgroundColor: '#ff3b77'}} disabled={!this.state.loadCompleted}>Change</button>
                 </div>
                 <div style={{width: '100%'}}>
                   <b style={{fontSize: 20,color: 'red',textAlign: 'center'}}>{this.state.label_userInfo}</b>
                 </div>
               </form>
-            </Tab>
-            <Tab label="Change Password">
+            </tab>
+            <tab label="Change Password">
                <form style={styles.infoBox} onSubmit={this._handlePasswordSubmit}>
                 <label style={styles.label}>Change Password</label>
 
@@ -405,13 +405,13 @@ let Profile = React.createClass({
                   {this.getValidationMessages('password_comfirm').map(this.renderHelpText)}
                 </div>
                 <div style={styles.submitButton}>
-                  <RaisedButton type="submit" style={{width: "100%"}} disabled={!this.state.loadCompleted} primary={true} label="Change" />
+                  <button className="button-normal" type="submit" style={{width: "100%", backgroundColor: '#ff3b77'}} disabled={!this.state.loadCompleted}>Change</button>
                 </div>
                 <div style={{width: '100%'}}>
                   <b style={{fontSize: 20,color: 'red',textAlign: 'center'}}>{this.state.label_password}</b>
                 </div>
               </form>
-            </Tab>         
+            </tab>         
           </Tabs>
         </div>
     );

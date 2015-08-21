@@ -50,7 +50,6 @@ let fetcher = {
                 window.location.href = '#/main/connect-error';
             });
     },
-
     done(id, user_id, auth_token, callback) {
         fetch('http://api.flipchinese.com/api/v1/packs/' + id + '/done', {
             method: 'post',
@@ -289,19 +288,20 @@ let PackPage = React.createClass({
                                     value="complete"
                                     label="I have completed this pack!"
                                     defaultChecked={this.state.isDone}
-                                    onCheck={this.done}/>
+                                    onCheck={this.done}
+                                />
                             </div>
                         </div>
                         {
                             this.state.mine
                             ?
                             <div>
-                                <RaisedButton label="< Back" secondary={true} onClick={this.back} style={{width: '100%'}}/>
+                                <button className="button-normal" style={{width: '100%', backgroundColor: '#1967d2'}} onClick={this.back} >{'< Back'}</button>
                             </div>
                             :
                             <div className="row center-xs" style={{padding: '0 90px'}}>
                                 <div className="col-xs-12 col-sm-6 col-md-6">
-                                    <RaisedButton label="< Back" secondary={true} onClick={this.back} style={{width: '100%'}}/>
+                                    <button className="button-normal" style={{width: '100%', backgroundColor: '#1967d2'}} onClick={this.back} >{'< Back'}</button>
                                 </div>
                                 <div className="col-xs-12 col-sm-6 col-md-6">
                                     <RaisedButton disabled={!this.state.ableToCart} labelStyle={MainStyle.buttonLabel} label={this.state.addButtonLabel} primary={true} onClick={this.addToCart} style={{width: '100%'}} />

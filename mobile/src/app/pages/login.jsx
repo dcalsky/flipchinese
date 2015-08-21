@@ -83,10 +83,10 @@ let Login = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li style={{cursor: 'pointer'}} className="appbar-icon col-xs-2 start-xs" onClick={()=>{this.goBack()}}>
+						<li style={{cursor: 'pointer'}} className="appbar-icon col-xs-1 start-xs" onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs">
+						<li className="appbar-title col-xs-10 row center-xs">
 							<h4>Login</h4>
 						</li>
 					</ul>
@@ -99,7 +99,7 @@ let Login = React.createClass({
 							<i className="zmdi zmdi-email"></i>
 							<input 
 					            ref="email" 
-					            className="input col-xs-12"
+					            className="input col-xs"
 					            valueLink={this.linkState('email')}
 					            onBlur={this.handleValidation('email')}
 								placeholder="Email"
@@ -110,7 +110,7 @@ let Login = React.createClass({
 							<i className="zmdi zmdi-key"></i>
 							<input 
 					            ref="password" 
-					            className="input col-xs-12"
+					            className="input col-xs"
 					            type="password"
 					            valueLink={this.linkState('password')}
 					            onBlur={this.handleValidation('password')}

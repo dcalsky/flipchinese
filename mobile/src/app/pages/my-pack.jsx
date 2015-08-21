@@ -65,10 +65,10 @@ let MyPack = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-1 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs">
+						<li className="appbar-title col-xs-10 row center-xs">
 							<h4>My Packs</h4>
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
@@ -90,7 +90,7 @@ let MyPack = React.createClass({
 									<div className="col-xs-6">
 										<img src={item.pack.thumb + '-flipchinesesj'} className="material-img" />
 									</div>
-									<div className="col-xs-6">
+									<div className="col-xs-6 material-info">
 										<h4 className="material-title">{item.pack.title}</h4>
 										<p><i className="material-pin zmdi zmdi-pin"></i>{item.pack.topic}</p>
 									</div>

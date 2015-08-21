@@ -4,12 +4,14 @@
 	background-color: #1967d2;
 	color: white;
 	.appbar-list {
+		position: relative;
 		list-style: none;
 		.appbar-icon i {
 			font-size: 30px;
 		}
 		.appbar-title{
 			text-align: center;
+			padding-top: 2px;
 			h4 {
 				font-size: 20px;
 				font-weight: 500;

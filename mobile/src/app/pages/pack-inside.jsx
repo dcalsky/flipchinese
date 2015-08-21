@@ -18,7 +18,7 @@ let Fast = React.createClass({
 	        materials: [],
 	        loadCompleted: false,
 	        tasks: [],
-	        ableToEnter: [],
+	        ableToEnter: false,
 	        pack: null,
 	    };
 	},
@@ -127,10 +127,10 @@ let Fast = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-1 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
+						<li className="appbar-title col-xs-10 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
 							<h4>{this.state.pack ? this.state.pack.title : 'Pack Inside'}</h4>
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{

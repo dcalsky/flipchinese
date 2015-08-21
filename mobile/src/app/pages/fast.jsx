@@ -110,12 +110,12 @@ let Fast = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-1 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
-							<h4>Fast</h4>
-							<i className="zmdi zmdi-caret-down"></i>
+						<li className="appbar-title col-xs-10 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
+							<h4>Fast<i className="zmdi zmdi-caret-down"></i></h4>
+							
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
@@ -173,14 +173,14 @@ let Fast = React.createClass({
 						null
 					}
 				<section >
-					<ul className="material-list">
+					<ul className="material-list container-fluid">
 						{this.state.materials.map((item)=>{
 							return(
-								<li style={{cursor: 'pointer'}} className="row middle-xs" onClick={()=>{this._enterMaterial(item.id)}}>
+								<li style={{cursor: 'pointer'}} className="row" onClick={()=>{this._enterMaterial(item.id)}}>
 									<div className="col-xs-6">
 										<img src={item.thumb + '-flipchinesesj'} className="material-img" />
 									</div>
-									<div className="col-xs-6">
+									<div className="col-xs-6 material-info">
 										<h4 className="material-title">{item.title}</h4>
 										{
 											item.topic?

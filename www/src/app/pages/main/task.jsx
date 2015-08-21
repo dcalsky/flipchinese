@@ -5,7 +5,7 @@ let React = require('react/addons');
 let Router = require('react-router');
 
 let mui = require('material-ui');
-let { TextField, RaisedButton,FlatButton, Dialog} = mui;
+let { TextField, FlatButton, Dialog} = mui;
 let _ = require('underscore');
 
 let MainStyle = require('../styles/main-style.jsx');
@@ -155,12 +155,9 @@ let Task = React.createClass({
                                     null
                                     :
                                     <div>
-                                        <RaisedButton 
-                                            style={{width: "100%"}} 
-                                            primary={true} 
-                                            label="Submit"
-                                            onClick={this.dialogShow}
-                                        />
+                                        <button className="button-normal" style={{width: "100%", backgroundColor: '#ff3b77'}} onClick={this.dialogShow}>
+                                            Submit
+                                        </button>
                                     </div>
                             }
                             <Dialog

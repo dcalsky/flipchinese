@@ -108,12 +108,11 @@ let Pack = React.createClass({
 			<div className="main">
 				<section className="appbar">
 					<ul className="appbar-list row middle-xs">
-						<li className="appbar-icon col-xs-2 start-xs" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
+						<li className="appbar-icon col-xs-1" style={{cursor: 'pointer'}} onClick={()=>{this.goBack()}}>
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
-						<li className="appbar-title col-xs-9 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
-							<h4>Focus</h4>
-							<i className="zmdi zmdi-caret-down"></i>
+						<li className="appbar-title col-xs-10 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
+							<h4>Focus<i className="zmdi zmdi-caret-down"></i></h4>
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
 							if(cookie.get('user_id') && cookie.get('auth_token')){
@@ -122,7 +121,7 @@ let Pack = React.createClass({
 								this.transitionTo('/main/login');
 							}
 						}}>
-							<i style={{fontSize: 24}} className="zmdi zmdi-account-circle"></i>
+							<i style={{fontSize: 26}} className="zmdi zmdi-account-circle"></i>
 						</li>
 					</ul>
 				</section>
@@ -196,7 +195,7 @@ let Pack = React.createClass({
 									<div className="col-xs-6">
 										<img src={item.thumb + '-flipchinesesj'} className="material-img" />
 									</div>
-									<div className="col-xs-6">
+									<div className="col-xs-6 material-info">
 										<h4 className="material-title">{item.title}</h4>
 										{
 											item.topic?
