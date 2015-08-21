@@ -114,7 +114,7 @@ let Fast = React.createClass({
 							<i className="zmdi zmdi-chevron-left"></i>
 						</li>
 						<li className="appbar-title col-xs-10 row center-xs" style={{cursor: 'pointer'}} onClick={this._spreadTopic}>
-							<h4>Fast<i className="zmdi zmdi-caret-down"></i></h4>
+							<h4>China Life<i className="zmdi zmdi-caret-down"></i></h4>
 							
 						</li>
 						<li className="col-xs-1 end-xs" style={{cursor: 'pointer'}} onClick={()=>{
@@ -130,7 +130,7 @@ let Fast = React.createClass({
 				</section>
 					{
 						this.state.topicSpread?
-						<section className="material-list">
+						<section>
 							<ul className="topic-list">
 								<li style={{cursor: 'pointer'}} onClick={()=>{self._handleLevelChange('')}}>
 									<div className={this.state.currentLevel == '' ? 'active topic-kind center-xs' : 'topic-kind center-xs'}>

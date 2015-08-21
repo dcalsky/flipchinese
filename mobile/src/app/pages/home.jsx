@@ -4,6 +4,24 @@ let Router = require('react-router');
 
 let Home = React.createClass({
 	mixins: [Router.Navigation],
+    componentWillMount() {
+        if(this.detectBrowser()){
+            this.getMaterial();
+        }
+    },
+    detectBrowser(){  
+        let sUserAgent = navigator.userAgent.toLowerCase();  
+        let isIpad = sUserAgent.match(/ipad/i) == 'ipad';    
+        let isIphone = sUserAgent.match(/iphone/i) == 'iphone';  
+        let isMac = sUserAgent.match(/macintosh/i) == "macintosh";
+        let isAndroid = sUserAgent.match(/android/i) == 'android'; 
+        if(!isIphone && !isAndroid){
+            window.location.href = 'http://www.flipchinese.com/';
+            return false;
+        }else{
+            return true;
+        }
+    },
 	_turnTo(route){
 		this.transitionTo('/main/' + route);
 	},
@@ -14,21 +32,21 @@ let Home = React.createClass({
                     <img src="./images/logo_white.png" />
                     <div className="home-header-infoBox">
                         <h3>Flip Chinese</h3>
-                        <p>Learn What You Need!</p>
+                        <p>Learn Practical Chinese for Living in China</p>
                     </div>
                     <button className="button-flat" onClick={()=>{this._turnTo('login')}}>LOG IN</button>
                 </section>
                 <section className="home-footer middle-xs">
                     <ul className="genre-list row around-xs">
                         <li className="col-xs-6 center-xs" onClick={()=>{this._turnTo('fast')}}>
-                            <h4>FAST</h4>
+                            <h4>China Life</h4>
                             <img src="./images/fast.jpg" />
-                            <p>Quickly solve your problems in China</p>
+                            <p>These dialogues, phrases and hints help you solve daily issues in China.</p>
                         </li>
                         <li className="col-xs-6 center-xs" onClick={()=>{this._turnTo('focus')}}>
-                            <h4>FOCUS</h4>
+                            <h4>Learn Chinese</h4>
                             <img src="./images/focus.jpg" />
-                            <p>Choose and learn language packs</p>
+                            <p>Choose the Chinese skill set you need, and learn it with multimedia content.</p>
                         </li>
                     </ul>
                 </section>

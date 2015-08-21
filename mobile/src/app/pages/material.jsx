@@ -54,8 +54,23 @@ let Material = React.createClass({
 	    };
 	},
 	componentWillMount() {
-        this.getMaterial();
+        if(this.detectBrowser()){
+            this.getMaterial();
+        }
 	},
+    detectBrowser(){  
+        let sUserAgent = navigator.userAgent.toLowerCase();  
+        let isIpad = sUserAgent.match(/ipad/i) == 'ipad';    
+        let isIphone = sUserAgent.match(/iphone/i) == 'iphone';  
+        let isMac = sUserAgent.match(/macintosh/i) == "macintosh";
+        let isAndroid = sUserAgent.match(/android/i) == 'android'; 
+        if(!isIphone && !isAndroid){
+            window.location.href = 'http://www.flipchinese.com/#/material/' + this.getParams().id;
+            return false;
+        }else{
+            return true;
+        }
+    },
 	getMaterial(){
         let self = this;
 	    reqwest({
