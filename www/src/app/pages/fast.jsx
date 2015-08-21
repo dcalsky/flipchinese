@@ -242,7 +242,7 @@ let Public = React.createClass({
           </section>
           <section className="main col-xs-12 col-sm-12 col-md-9">
             <div>
-              <h2>Fast</h2>
+              <h2>China Life</h2>
                 <div className="card" style={{paddingTop: 30}}>
                   <ul className="content-list row center-xs" >
                       {this.state.materials.map(function (item) {

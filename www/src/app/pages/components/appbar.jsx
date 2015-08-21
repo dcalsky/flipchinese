@@ -65,16 +65,16 @@ let Appbar = React.createClass({
             <div className="appbar">
 	            <ul className="row middle-xs">
 	            	<li className="col-xs-2 title" onClick={this._backToHome}>{this.props.title}</li>
-	            	<li className="col-xs-5 nav row start-xs">
+	            	<li className="col-xs-6 nav row start-xs">
 			            	{this.props.nav.map(function(item){
 			            		return(
-			            			<a className="nav-item col-xs-3" href={item.route}>
+			            			<a className="nav-item col-xs-3 center-xs" href={item.route}>
 			            				{item.title}
 			            			</a>
 			            		)
 			            	})}
 	            	</li>
-	            	<li className="col-xs-5 status end-xs row middle-xs">
+	            	<li className="col-xs-4 status end-xs row middle-xs">
 		            	{status}
 		            	{
 		            		this.props.isLogin?

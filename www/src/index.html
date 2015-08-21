@@ -15,13 +15,13 @@
 	            	<li class="col-xs-2 title" onclick="window.location.href='http://www.flipchinese.com/'">Flip Chinese</li>
 	            	<li class="col-xs-5 nav row start-xs">
             			<a class="nav-item col-xs-3" onclick="window.location.href='web/index.html#/fast'">
-            				Fast
+            				China Life
             			</a>
             			<a class="nav-item col-xs-3" onclick="window.location.href='web/index.html#/main/packs'">
-            				Focus
+            				Learn Chinese
             			</a>
             			<a class="nav-item col-xs-3" onclick="window.location.href='http://www.flipchinese.com/intro.html'">
-            				Intro
+            				About
             			</a>
 	            	</li>
 	            </ul>
@@ -34,26 +34,26 @@
 			<h2>Flip Chinese</h2>
 		</div>
 		<div class="intro">
-			<p>Learn What You Need!</p>
+			<p>Learn Practical Chinese for Living in China</p>
 		</div>
 		<button class="button-flat" onclick="window.location.href='web/index.html#/sign-in'">Log In</button>
 	</section>
 	<section class="genre-part">
 		<ul class="genre-list row top-xs center-xs">
 			<li class="col-xs-12 col-sm-3">
-				<h3 class="title-genre">FAST</h3>
+				<h3 class="title-genre">China Life</h3>
 				<img class="img-genre" src="./web/images/focus.jpg" onclick="window.location.href='web/index.html#/fast'"/>
-				<p class="intro-genre">Quickly solve your problems in China </p>
+				<p class="intro-genre">These dialogues, phrases and hints help you solve daily issues in China.</p>
 			</li>
 			<li class="col-xs-12 col-sm-3">
-				<h3 class="title-genre">FOCUS</h3>
+				<h3 class="title-genre">Learn Chinese</h3>
 				<img class="img-genre" src="./web/images/fast.jpg" onclick="window.location.href='web/index.html#/main/packs'"/>
-				<p class="intro-genre">Choose and learn language packs </p>
+				<p class="intro-genre">Choose the Chinese skill set you need, and learn it with multimedia content.</p>
 			</li>
 			<li class="col-xs-12 col-sm-3">
-				<h3 class="title-genre">INTRO</h3>
+				<h3 class="title-genre">About</h3>
 				<img class="img-genre" src="./web/images/intro.jpg" onclick="window.location.href='http://www.flipchinese.com/intro.html'"/>
-				<p class="intro-genre">What's this?</p>
+				<p class="intro-genre">Our learning environment and company explained.</p>
 			</li>
 		</ul>
 	</section>
@@ -161,5 +161,16 @@
 		<p>Shanghai Qifei Education Technology Co. Ltd.</p>
 		<a href="http://www.miibeian.gov.cn" target="_blank" style="color: #e5e5e5;font-size: 13px;text-decoration: none;">沪ICP备 15004120号-1</a>
 	</footer>
+
+<script type="text/javascript"> 
+    var sUserAgent = navigator.userAgent.toLowerCase();  
+    var isIpad = sUserAgent.match(/ipad/i) == 'ipad';    
+    var isIphone = sUserAgent.match(/iphone/i) == 'iphone';  
+    var isMac = sUserAgent.match(/macintosh/i) == "macintosh";
+    var isAndroid = sUserAgent.match(/android/i) == 'android'; 
+    if(isIphone || isAndroid){
+        window.location.href = 'http://m.flipchinese.com/';
+    }
+</script> 
 </body>
 </html>

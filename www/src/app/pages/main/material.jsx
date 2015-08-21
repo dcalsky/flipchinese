@@ -12,23 +12,7 @@ let Progress = require('../components/progress.jsx');
 let Tabs = require('../components/tabs.jsx');
 
 let checkStatus = require('../../utils/check-status.js');
-let isEmpty = (obj)=>{
-        if(obj instanceof Array){
-            return obj.length && obj.length == 0
-        }else if(obj instanceof Object){
-            let key;
-            for(key in obj){
-                return false;
-            }
-            return true;
-        }else{
-            if(obj){
-                return false;
-            }else{
-                return true;
-            }
-        }
-};
+
 let styles = {
     title: {
         paddingBottom: 30,
@@ -152,11 +136,26 @@ let Material = React.createClass({
         };
     },
     componentWillMount() {
-        mixpanel.track("open", {
-            'where': "material-id",
-            'id': this.getParams().id
-        });
-        this.getMaterial();
+        if(this.detectBrowser()){
+            mixpanel.track("open", {
+                'where': "material-id",
+                'id': this.getParams().id
+            });
+            this.getMaterial();
+        }
+    },
+    detectBrowser(){  
+        let sUserAgent = navigator.userAgent.toLowerCase();  
+        let isIpad = sUserAgent.match(/ipad/i) == 'ipad';    
+        let isIphone = sUserAgent.match(/iphone/i) == 'iphone';  
+        let isMac = sUserAgent.match(/macintosh/i) == "macintosh";
+        let isAndroid = sUserAgent.match(/android/i) == 'android'; 
+        if(isIphone || isAndroid){
+            window.location.href = 'http://m.flipchinese.com/#/main/material/' + this.getParams().id;
+            return false;
+        }else{
+            return true;
+        }
     },
     getMaterial(){
         let self = this;

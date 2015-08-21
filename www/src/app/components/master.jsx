@@ -60,9 +60,9 @@ class Master extends React.Component {
                     title="Flip Chinese"
                     username={cookie.get('username')}
                     nav={[
-                        {route: '#/fast', title: 'Fast'},
-                        {route: '#/main/packs', title: 'Focus'},
-                        {route: 'http://www.flipchinese.com/intro.html', title: 'Intro'}
+                        {route: '#/fast', title: 'China Life'},
+                        {route: '#/main/packs', title: 'Learn Chinese'},
+                        {route: 'http://www.flipchinese.com/intro.html', title: 'About'}
                     ]}
                     isLogin={cookie.get('user_id') && cookie.get('auth_token')}
                 />  
