@@ -119,7 +119,7 @@ let SignIn = React.createClass({
     this.setState({
       completed: false,
     }); 
-    if(!(this.isValid('email') && this.isValid('password'))){
+    if(!this.isValid('email') || !this.isValid('password') || !this.state.email || !this.state.password){
       this.setState({
         completed: true,
       }); 

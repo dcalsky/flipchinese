@@ -13,6 +13,24 @@ let Tabs = require('../components/tabs.jsx');
 
 let checkStatus = require('../../utils/check-status.js');
 
+let isEmpty = (obj)=>{
+        if(obj instanceof Array){
+            return obj.length && obj.length == 0
+        }else if(obj instanceof Object){
+            let key;
+            for(key in obj){
+                return false;
+            }
+            return true;
+        }else{
+            if(obj){
+                return false;
+            }else{
+                return true;
+            }
+        }
+};
+
 let styles = {
     title: {
         paddingBottom: 30,
@@ -258,7 +276,7 @@ let Material = React.createClass({
                        
                         {
                             this.state.scripts.hanzi && this.state.scripts.pinyin && this.state.scripts.translation ?
-                             <div className="row" style={styles.content}>
+                             <div className="row start-xs" style={styles.content}>
                                 <div style={styles.mediaBox} className="col-xs-12 col-sm-12 col-md-7">
                                     {mediaMeal}
                                 </div>
@@ -287,7 +305,7 @@ let Material = React.createClass({
                                 <div>
                                     <Tabs>
                                         <tab title="Vocabulary" >
-                                            <ul style={styles.kpList}>
+                                            <ul className="start-xs" style={styles.kpList}>
                                                 {
                                                     _.map(this.state.kp.voc,(item, key)=>{
                                                         if(key){
@@ -300,7 +318,7 @@ let Material = React.createClass({
                                             </ul>
                                         </tab>
                                         <tab title="Grammar" >
-                                            <ul style={styles.kpList}>
+                                            <ul className="start-xs" style={styles.kpList}>
                                                 {
                                                     _.map(this.state.kp.grammar,(item, key)=>{
                                                         if(key){
@@ -313,7 +331,7 @@ let Material = React.createClass({
                                             </ul>
                                         </tab>
                                         <tab title="Character" >
-                                            <ul style={styles.kpList}>
+                                            <ul className="start-xs" style={styles.kpList}>
                                                 {
                                                     _.map(this.state.kp.character,(item, key)=>{
                                                         if(key){

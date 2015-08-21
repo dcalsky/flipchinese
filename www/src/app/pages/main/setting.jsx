@@ -104,8 +104,9 @@ let Profile = React.createClass({
         contact_phone: Joi.number().allow(null).label('Contact Phone'),
         contact_other: Joi.string().allow(null).min(3).max(25).label('Contact Other'),
         birth_year: Joi.string().allow(null).min(4).max(10).label('Birth Year'),
-        password: Joi.string().allow(null).required().min(6).max(14).label('Password'),
-        password_comfirm: Joi.allow(null).valid(Joi.ref('password')).required().label('Password Confirmation'),
+        password_old: Joi.string().required().min(8).max(14).label('Old Password'),
+        password: Joi.string().required().min(8).max(14).label('Password'),
+        password_comfirm: Joi.valid(Joi.ref('password')).required().label('Password Confirmation'),
   },
   mixins: [ Router.Navigation, React.addons.LinkedStateMixin ,ValidationMixin],
   contextTypes() {
@@ -198,34 +199,35 @@ let Profile = React.createClass({
     this.setState({
       loadCompleted: false,
       label_password: null,
-    })
+    });
     e.preventDefault();
-    var onValidate = function(error, validationErrors) {
-      if (error) {
-        return ;
-      } else {
-        fetcher.updateUserPassword(cookie.get('user_id'),cookie.get('auth_token'),this.state.password_old,this.state.password,function(data){
-          if(data.result == 'ok'){
-            self.setState({
-              loadCompleted: true,
-              password: null,
-              password_old: null,
-              password_comfirm: null,
-              label_password: 'Completed!'
-            });
-          }else{
-            self.setState({
-              loadCompleted: true,
-              password: null,
-              password_old: null,
-              password_comfirm: null,
-              label_password: data.message+'!',
-            });
-          }
+    if(!this.isValid('password') || !this.isValid('password_old') || !this.isValid('password_comfirm') || !this.state.password_old || !this.state.password_comfirm || !this.state.password){
+      this.setState({
+        loadCompleted: true,
+        label_password: 'Error',
+      });
+      return;
+    }
+    fetcher.updateUserPassword(cookie.get('user_id'),cookie.get('auth_token'),this.state.password_old,this.state.password,function(data){
+      if(data.result == 'ok'){
+        self.setState({
+          loadCompleted: true,
+          password: null,
+          password_old: null,
+          password_comfirm: null,
+          label_password: 'Completed!'
+        });
+        self.transitionTo('/main/logout');
+      }else{
+        self.setState({
+          loadCompleted: true,
+          password: null,
+          password_old: null,
+          password_comfirm: null,
+          label_password: data.message+'!',
         });
       }
-    }.bind(this);
-    this.validate(onValidate);
+    });
   },
   renderHelpText(message){
     return (
@@ -255,10 +257,10 @@ let Profile = React.createClass({
             <tab title="My Order">
               <Order />
             </tab>
-            <tab label="History Task">
+            <tab title="History Task">
               <History />
             </tab>
-            <tab label='Personal Info'>
+            <tab title='Personal Info'>
               <form style={styles.infoBox} onSubmit={this._handleInfoSubmit}>
                 <label style={styles.label}>Location</label>
 
@@ -373,21 +375,26 @@ let Profile = React.createClass({
                 </div>
               </form>
             </tab>
-            <tab label="Change Password">
+            <tab title="Change Password">
                <form style={styles.infoBox} onSubmit={this._handlePasswordSubmit}>
                 <label style={styles.label}>Change Password</label>
 
                 <div style={styles.textBox}>
                   <TextField 
+                    ref="password_old"
+                    type="password"
                     floatingLabelText="Old Password" 
                     valueLink={this.linkState('password_old')}
                     disabled={!this.state.loadCompleted}
                   />   
+                  {this.getValidationMessages('password_old').map(this.renderHelpText)}      
                 </div>
 
                 <div style={styles.textBox}>           
                   <TextField 
-                  floatingLabelText="New Password" 
+                    ref="password"
+                    type="password"
+                    floatingLabelText="New Password" 
                     valueLink={this.linkState('password')}
                     onBlur={this.handleValidation('password')}
                     disabled={!this.state.loadCompleted}
@@ -397,7 +404,9 @@ let Profile = React.createClass({
 
                 <div style={styles.textBox}>
                   <TextField 
-                  floatingLabelText="Verify Password" 
+                    ref="password_comfirm"
+                    type="password"
+                    floatingLabelText="Verify Password" 
                     valueLink={this.linkState('password_comfirm')}
                     onBlur={this.handleValidation('password_comfirm')}
                     disabled={!this.state.loadCompleted}

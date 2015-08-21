@@ -210,7 +210,7 @@ let Order = React.createClass({
       this.setState({orderLoadCompleted: false});
     }
     fetcher.getHistoryOrders(page,cookie.get('user_id'),function (data) {
-      console.log(data);
+      data.orders = data.orders.reverse();
       if(data.orders.length == 0){
         let _orders = initial ? [] : self.state.orders.concat(data.orders);
         self.setState({
