@@ -96,20 +96,21 @@ let PackPage = React.createClass({
           'where': "pack inside",
         });
         if(cookie.get('user_id') && cookie.get('auth_token')){
-            this.getMyPacks(this.getParams().id, cookie.get('user_id'), cookie.get('auth_token'));
+            this.getMyPacks(this.getParams().id, self.getQuery().pack_item, cookie.get('user_id'), cookie.get('auth_token'));
         }else{
+            this.getPack(this.getParams().id)
             this.setState({ableToEnter: false})
         }
         
     },
-    getMyPacks(id, user_id, auth_token){
+    getMyPacks(id, pack_item, user_id, auth_token){
         let self = this;
         fetcher.getMyPacks(user_id, auth_token, function(data){
             self.setState({
                 ableToEnter: data.pack_ids.indexOf(parseInt(id)) == -1 ? false : true,
             });
-            if(self.getQuery().pack_item){
-                self.getPack_item(self.getQuery().pack_item)
+            if(pack_item){
+                self.getPack_item(pack_item)
             }else{
                 self.getPack(id)
             }
