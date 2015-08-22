@@ -10,7 +10,7 @@ var Master = require('./components/master.jsx');
 
 // Flip Chinese Main Route
 let Main = require('./pages/main.jsx');
-let Material = require('./pages/main/material.jsx');
+let Materials = require('./pages/main/materials.jsx');
 let Task = require('./pages/main/task.jsx');
 let Packs = require('./pages/main/packs.jsx');
 let MainPackPage = require('./pages/main/pack-page.jsx');
@@ -48,7 +48,7 @@ var AppRoutes = (
       <Route name="sign-in" handler={SignIn} />
       <Route name="sign-up" handler={SignUp} />
       <Route name="fast" handler={Fast} />
-      <Route name="material/:id" handler={Material} />
+      <Route name="material/:id?" handler={Materials} />
       
       <Route name="main" handler={Main}>
         <Route name="packs" handler={Packs} />

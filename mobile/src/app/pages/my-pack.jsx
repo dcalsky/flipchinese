@@ -49,7 +49,7 @@ let MyPack = React.createClass({
 	      }
 	      , error(err){
       		console.log(err);
-      		this.setState({
+      		self.setState({
       			loadCompleted: true,
       			findNothing: true,
       		});

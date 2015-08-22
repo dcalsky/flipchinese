@@ -153,31 +153,40 @@ let Material = React.createClass({
             materialTopics: [],
         };
     },
-    componentWillMount() {
-        if(this.detectBrowser()){
+    componentWillReceiveProps(nextProps) {
+        if(this.detectBrowser(nextProps.id)){
             mixpanel.track("open", {
                 'where': "material-id",
-                'id': this.getParams().id
+                'id': nextProps.id
             });
-            this.getMaterial();
+            this.getMaterial(nextProps.id);
         }
     },
-    detectBrowser(){  
+    componentWillMount() {
+        if(this.detectBrowser(this.props.id)){
+            mixpanel.track("open", {
+                'where': "material-id",
+                'id': this.props.id
+            });
+            this.getMaterial(this.props.id);
+        }
+    },
+    detectBrowser(material_id){  
         let sUserAgent = navigator.userAgent.toLowerCase();  
         let isIpad = sUserAgent.match(/ipad/i) == 'ipad';    
         let isIphone = sUserAgent.match(/iphone/i) == 'iphone';  
         let isMac = sUserAgent.match(/macintosh/i) == "macintosh";
         let isAndroid = sUserAgent.match(/android/i) == 'android'; 
         if(isIphone || isAndroid){
-            window.location.href = 'http://m.flipchinese.com/#/main/material/' + this.getParams().id;
+            window.location.href = 'http://m.flipchinese.com/#/main/material/' + material_id;
             return false;
         }else{
             return true;
         }
     },
-    getMaterial(){
+    getMaterial(material_id){
         let self = this;
-        fetcher.get(self.getParams().id,cookie.get('user_id'),cookie.get('auth_token'), function (data) {
+        fetcher.get(material_id,cookie.get('user_id'),cookie.get('auth_token'), function (data) {
             self.setState({
                 title: data.material.title,
                 intro: data.material.intro,

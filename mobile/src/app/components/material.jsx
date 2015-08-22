@@ -1,7 +1,7 @@
 let React = require('react');
 let Router = require('react-router');
-let Tabs = require('../components/tabs.jsx');
-let Loader = require('../components/loader.jsx');
+let Tabs = require('./tabs.jsx');
+let Loader = require('./loader.jsx');
 
 let reqwest = require('reqwest');
 let cookie = require('cookie-cutter');
@@ -53,28 +53,33 @@ let Material = React.createClass({
             explain: null,
 	    };
 	},
+    componentWillReceiveProps(nextProps) {
+        if(this.detectBrowser(nextProps.id)){
+            this.getMaterial(nextProps.id);
+        }
+    },
 	componentWillMount() {
-        if(this.detectBrowser()){
-            this.getMaterial();
+        if(this.detectBrowser(this.props.id)){
+            this.getMaterial(this.props.id);
         }
 	},
-    detectBrowser(){  
+    detectBrowser(material_id){  
         let sUserAgent = navigator.userAgent.toLowerCase();  
         let isIpad = sUserAgent.match(/ipad/i) == 'ipad';    
         let isIphone = sUserAgent.match(/iphone/i) == 'iphone';  
         let isMac = sUserAgent.match(/macintosh/i) == "macintosh";
         let isAndroid = sUserAgent.match(/android/i) == 'android'; 
         if(!isIphone && !isAndroid){
-            window.location.href = 'http://www.flipchinese.com/#/material/' + this.getParams().id;
+            window.location.href = 'http://www.flipchinese.com/#/material/' + material_id;
             return false;
         }else{
             return true;
         }
     },
-	getMaterial(){
+	getMaterial(material_id){
         let self = this;
 	    reqwest({
-	        url: 'http://api.flipchinese.com/api/v1/materials/' + this.getParams().id + '?user_id=' + cookie.get('user_id') + '&auth_token=' + cookie.get('auth_token')
+	        url: 'http://api.flipchinese.com/api/v1/materials/' + material_id + '?user_id=' + cookie.get('user_id') + '&auth_token=' + cookie.get('auth_token')
 	      , type: 'json'
 	      , method: 'get'
 	      , success(resp) {
@@ -165,7 +170,7 @@ let Material = React.createClass({
                             </li>
 						</ul>
 					</section>
-					<section>
+					<section style={{height: 'auto'}}>
 	                {
 	                    this.state.scripts.hanzi && this.state.scripts.pinyin && this.state.scripts.translation ?
 	                     <div>

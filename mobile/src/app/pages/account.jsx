@@ -57,7 +57,7 @@ let Fast = React.createClass({
 	      }
 	      , error(err){
 	      		console.log(err);
-	      		this.setState({
+	      		self.setState({
 	      			historyLoadCompleted: true,
 	      			findNothing: true,
 	      		});

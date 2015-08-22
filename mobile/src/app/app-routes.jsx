@@ -11,7 +11,7 @@ let Packs = require('./pages/packs.jsx');
 let Account = require('./pages/account.jsx');
 let Login = require('./pages/login.jsx');
 let Sign = require('./pages/sign.jsx');
-let Material = require('./pages/material.jsx');
+let Materials = require('./pages/materials.jsx');
 let MyPack = require('./pages/my-pack.jsx');
 let PackInside = require('./pages/pack-inside.jsx');
 let Task = require('./pages/task.jsx');
@@ -28,7 +28,7 @@ let AppRoutes = (
 		    <Route name="login" handler={Login} />
 		    <Route name="sign" handler={Sign} />
 		    <Route name="my-pack" handler={MyPack} />
-		    <Route name="material/:id" handler={Material} />
+		    <Route name="material/:id?" handler={Materials} />
 		    <Route name="task/:id" handler={Task} />
 		    <Route name="pack-inside/:id" handler={PackInside} />	
 		</Route>    	    

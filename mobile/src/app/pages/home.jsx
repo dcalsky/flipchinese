@@ -5,9 +5,7 @@ let Router = require('react-router');
 let Home = React.createClass({
 	mixins: [Router.Navigation],
     componentWillMount() {
-        if(this.detectBrowser()){
-            this.getMaterial();
-        }
+        this.detectBrowser();
     },
     detectBrowser(){  
         let sUserAgent = navigator.userAgent.toLowerCase();  
