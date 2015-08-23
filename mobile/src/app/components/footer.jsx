@@ -8,6 +8,9 @@ let Footer = React.createClass({
 	    	
 	    };
 	},
+	componentWillMount() {
+		document.addEventListener("touchstart", function(){}, true);
+	},
 	_turnTo(route){
 		this.transitionTo(route);
 	},

@@ -96,7 +96,7 @@ let PackPage = React.createClass({
           'where': "pack inside",
         });
         if(cookie.get('user_id') && cookie.get('auth_token')){
-            this.getMyPacks(this.getParams().id, self.getQuery().pack_item, cookie.get('user_id'), cookie.get('auth_token'));
+            this.getMyPacks(this.getParams().id, this.getQuery().pack_item, cookie.get('user_id'), cookie.get('auth_token'));
         }else{
             this.getPack(this.getParams().id)
             this.setState({ableToEnter: false})
